@@ -554,7 +554,7 @@ function InstallDependencies {
 
     # Initialize connections - Azure Az/CLI/Azure AD
     WriteInfo "Login with with your Azure subscription account. Launching Azure sign-in window..."
-    Connect-AzAccount -Subscription $parameters.subscriptionId.Value -ErrorAction Stop
+    Connect-AzAccount -Subscription $parameters.subscriptionId.Value -ErrorAction Stop -DeviceCode
     $user = az login --tenant $parameters.subscriptionTenantId.value
     if ($LASTEXITCODE -ne 0) {
         WriteError "Login failed for user..."
