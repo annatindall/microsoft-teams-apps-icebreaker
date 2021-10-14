@@ -142,7 +142,7 @@ namespace Icebreaker.Services
 
             var teamsPerson2 = JObject.FromObject(group[0]).ToObject<TeamsChannelAccount>();
 
-            var tasks = new List<Task>();
+            var tasks = new List<Task<int>>();
             foreach (ChannelAccount person in group)
             {
                 this.telemetryClient.TrackTrace($"Sending pairup notification to {person.Id}");
@@ -153,9 +153,8 @@ namespace Icebreaker.Services
             }
 
             // Send notifications and return the number that was successful
-            // TODO - determine the number that were successful.
-            await Task.WhenAll(tasks);
-            return group.Count;
+            var notifyResults = await Task.WhenAll(tasks);
+            return notifyResults.Count(wasNotified => wasNotified);
         }
 
         /// <summary>
