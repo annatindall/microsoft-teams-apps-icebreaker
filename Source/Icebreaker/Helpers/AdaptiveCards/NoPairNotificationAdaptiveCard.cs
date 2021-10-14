@@ -24,7 +24,7 @@ namespace Icebreaker.Helpers.AdaptiveCards
         private const string ExternallyAuthenticatedUpnMarker = "#ext#";
 
         private static readonly Lazy<AdaptiveCardTemplate> AdaptiveCardTemplate =
-            new Lazy<AdaptiveCardTemplate>(() => CardTemplateHelper.GetAdaptiveCardTemplate(AdaptiveCardName.NoPairUpNotification));
+            new Lazy<AdaptiveCardTemplate>(() => CardTemplateHelper.GetAdaptiveCardTemplate(AdaptiveCardName.NoPairNotification));
 
         /// <summary>
         /// Creates the nopairup notification card.
@@ -42,8 +42,8 @@ namespace Icebreaker.Helpers.AdaptiveCards
             var senderGivenName = string.IsNullOrEmpty(sender.GivenName) ? sender.Name : sender.GivenName;
             var cardData = new
             {
-                noMatchUpCardTitleContent = Resources.NoMatchUpCardTitleContent,
-                noMatchUpCardContent = string.Format(Resources.NoMatchUpCardContent, botDisplayName, teamName),
+                noMatchUpCardTitleContent = "Sorry you weren't matched to a pair this time :-(", // Resources.NoMatchUpCardTitleContent,
+                noMatchUpCardContent = $"Hi there again, I'm {botDisplayName} in {teamName}. A bot that pairs you with a new coworker to meet each week. This time we didn't find you a match, but we'll make sure you are matched next time!</value>", // string.Format(Resources.NoMatchUpCardContent, botDisplayName, teamName),
                 pauseMatchesButtonText = Resources.PausePairingsButtonText,
                 textAlignment,
             };
