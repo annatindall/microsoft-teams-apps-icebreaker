@@ -93,8 +93,16 @@ namespace Icebreaker.Services
 
                         foreach (var pair in this.MakePairs(optedInUsers).Take(this.maxPairUpsPerTeam))
                         {
-                            usersNotifiedCount += await this.NotifyPairAsync(team, teamName, pair, default(CancellationToken));
-                            pairsNotifiedCount++;
+                            if (pair.Item2 == null)
+                            {
+                                // Lonely person - not paired
+                                // Do something
+                            } 
+                            else 
+                            {
+                                usersNotifiedCount += await this.NotifyPairAsync(team, teamName, pair, default(CancellationToken));
+                                pairsNotifiedCount++;
+                            }
                         }
                     }
                     catch (Exception ex)
@@ -223,6 +231,7 @@ namespace Icebreaker.Services
         /// <returns>List of pairs</returns>
         private List<Tuple<ChannelAccount, ChannelAccount>> MakePairs(List<ChannelAccount> users)
         {
+
             if (users.Count > 1)
             {
                 this.telemetryClient.TrackTrace($"Making {users.Count / 2} pairs among {users.Count} users");
@@ -234,10 +243,16 @@ namespace Icebreaker.Services
 
             this.Randomize(users);
 
-            var pairs = new List<Tuple<ChannelAccount, ChannelAccount>>();
             for (int i = 0; i < users.Count - 1; i += 2)
             {
                 pairs.Add(new Tuple<ChannelAccount, ChannelAccount>(users[i], users[i + 1]));
+            }
+
+            if (users.Count > 1 && users.Count % 2 == 1)
+            {
+                var lonelyUser = users[users.Count - 1];
+                this.telemetryClient.TrackTrace($"Odd number - user {lonelyUser} won't be matched");
+                pairs.Add(new Tuple<ChannelAccount, ChannelAccount>(lonelyUser, null));
             }
 
             return pairs;
