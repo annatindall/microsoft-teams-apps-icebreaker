@@ -157,6 +157,33 @@ namespace Icebreaker.Services
         }
 
         /// <summary>
+        /// Notify a pairup.
+        /// </summary>
+        /// <param name="teamModel">DB team model info.</param>
+        /// <param name="teamName">MS-Teams team name</param>
+        /// <param name="noPair">The person who hasn't been paired up</param>
+        /// <param name="cancellationToken">Propagates notification that operations should be canceled.</param>
+        /// <returns>Number of users notified successfully</returns>
+        private async Task<int> NotifyNoPairAsync(TeamInstallInfo teamModel, string teamName, ChannelAccount noPair, CancellationToken cancellationToken)
+        {
+            // Get the default culture info to use in resource files.
+            var cultureName = CloudConfigurationManager.GetSetting("DefaultCulture");
+            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(cultureName);
+
+            this.telemetryClient.TrackTrace($"Sending no-pairup notification to {noPair.Id}");
+
+            var teamsNoPairPerson = JObject.FromObject(noPair).ToObject<TeamsChannelAccount>();
+
+            // Create a card for the no pair person
+            var cardForNoPairPerson = NoPairNotificationAdaptiveCard.GetCard(teamName, teamsNoPairPerson, this.botDisplayName);
+
+            // Send notifications and return the number that was successful
+            var notifyResults = await Task.WhenAll(
+                this.conversationHelper.NotifyUserAsync(this.botAdapter, teamModel.ServiceUrl, teamModel.TeamId, MessageFactory.Attachment(cardForNoPairPerson), teamsNoPairPerson, teamModel.TenantId, cancellationToken));
+            return notifyResults.Count(wasNotified => wasNotified);
+        }
+
+        /// <summary>
         /// Get list of opted in users to start matching process
         /// </summary>
         /// <param name="dbMembersLookup">Lookup of DB users opt-in status</param>

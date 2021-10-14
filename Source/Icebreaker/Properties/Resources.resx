@@ -177,6 +177,14 @@
     <value>It's time for a match!</value>
     <comment>The title text for the pairup notification adaptive card</comment>
   </data>
+  <data name="NoMatchUpCardTitleContent" xml:space="preserve">
+    <value>Sorry you weren't matched to a pair this time :-(</value>
+    <comment>The title text for the no pairup notification adaptive card</comment>
+  </data>
+    <data name="NoMatchUpCardContent" xml:space="preserve">
+    <value>Hi there again, I'm {0} in {1}. A bot that pairs you with a new coworker to meet each week. This time we didn't find you a match, but we'll make sure you are matched next time!</value>
+    <comment>First part of the match up card main content</comment>
+  </data>
   <data name="MeetupContent" xml:space="preserve">
     <value>Hey there, looks like we've been matched by {0} this week. It'd be great to meet up for a coffee or a lunch or a call if you've got time.</value>
     <comment>Content of the Meetup for the propose meeting</comment>
