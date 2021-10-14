@@ -48,7 +48,9 @@ namespace Icebreaker.Helpers.AdaptiveCards
 
             var meetingTitle = string.Format(Resources.MeetupTitle, senderGivenName, recipientGivenName);
             var meetingContent = string.Format(Resources.MeetupContent, botDisplayName);
-            var meetingLink = "https://teams.microsoft.com/l/meeting/new?subject=" + Uri.EscapeDataString(meetingTitle) + "&attendees=" + recipientUpn + "&content=" + Uri.EscapeDataString(meetingContent);
+            var recipientUpns = new List<String> { recipientUpn, recipientUpn };
+            var recipientUpnsString = string.Join(",", recipientUpns);
+            var meetingLink = "https://teams.microsoft.com/l/meeting/new?subject=" + Uri.EscapeDataString(meetingTitle) + "&attendees=" + recipientUpnsString + "&content=" + Uri.EscapeDataString(meetingContent);
 
             var cardData = new
             {
@@ -60,7 +62,7 @@ namespace Icebreaker.Helpers.AdaptiveCards
                 chatWithMessageGreeting = Uri.EscapeDataString(Resources.ChatWithMessageGreeting),
                 pauseMatchesButtonText = Resources.PausePairingsButtonText,
                 proposeMeetupButtonText = Resources.ProposeMeetupButtonText,
-                personUpn = recipientUpn,
+                personUpn = recipientUpnsString,
                 meetingLink,
                 textAlignment,
             };
