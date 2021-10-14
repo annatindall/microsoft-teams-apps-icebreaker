@@ -35,7 +35,7 @@ namespace Icebreaker.Helpers.AdaptiveCards
         /// <param name="recipients">The users who will be receiving this card.</param>
         /// <param name="botDisplayName">The bot display name.</param>
         /// <returns>Pairup notification card</returns>
-        public static Attachment GetCard(string teamName, TeamsChannelAccount sender, IList<TeamsChannelAccount> recipients, string botDisplayName)
+        public static Attachment GetCard(string teamName, TeamsChannelAccount sender, List<TeamsChannelAccount> recipients, string botDisplayName)
         {
             // Set alignment of text based on default locale.
             var textAlignment = CultureInfo.CurrentCulture.TextInfo.IsRightToLeft ? AdaptiveHorizontalAlignment.Right.ToString() : AdaptiveHorizontalAlignment.Left.ToString();
