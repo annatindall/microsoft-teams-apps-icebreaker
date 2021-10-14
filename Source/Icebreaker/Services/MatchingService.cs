@@ -97,7 +97,7 @@ namespace Icebreaker.Services
                             {
                                 // Lonely person - not paired
                                 this.telemetryClient.TrackTrace($"Sending no-pair notification to {pair.Item1}.");
-                                NotifyNoPairAsync(team, teamName, pair.Item1, default(CancellationToken));
+                                await this.NotifyNoPairAsync(team, teamName, pair.Item1, default(CancellationToken));
                             } 
                             else 
                             {
