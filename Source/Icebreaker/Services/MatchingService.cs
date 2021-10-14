@@ -131,7 +131,7 @@ namespace Icebreaker.Services
         /// </summary>
         /// <param name="teamModel">DB team model info.</param>
         /// <param name="teamName">MS-Teams team name</param>
-        /// <param name="pair">The pairup</param>
+        /// <param name="group">The group to notify</param>
         /// <param name="cancellationToken">Propagates notification that operations should be canceled.</param>
         /// <returns>Number of users notified successfully</returns>
         private async Task<int> NotifyGroupAsync(TeamInstallInfo teamModel, string teamName, List<ChannelAccount> group, CancellationToken cancellationToken)
@@ -206,6 +206,7 @@ namespace Icebreaker.Services
                 groups.Add(users.GetRange(i, this.groupSize));
                 i += this.groupSize;
             }
+
             if (i <= users.Count - 2)
             {
                 groups.Add(users.GetRange(i, users.Count - i));
