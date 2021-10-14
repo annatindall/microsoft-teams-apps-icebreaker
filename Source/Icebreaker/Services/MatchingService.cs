@@ -32,6 +32,7 @@ namespace Icebreaker.Services
         private readonly TelemetryClient telemetryClient;
         private readonly BotAdapter botAdapter;
         private readonly int maxPairUpsPerTeam;
+        private readonly int groupSize;
         private readonly string botDisplayName;
 
         /// <summary>
