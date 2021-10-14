@@ -23,7 +23,7 @@
           "items": [
             {
               "type": "TextBlock",
-              "text": "${noMatchUpCardContentPart}",
+              "text": "${noMatchUpCardContent}",
               "wrap": true,
               "horizontalAlignment": "${textAlignment}"
             }
