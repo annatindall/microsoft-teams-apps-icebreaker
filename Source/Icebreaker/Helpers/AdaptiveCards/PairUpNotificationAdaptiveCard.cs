@@ -40,8 +40,8 @@ namespace Icebreaker.Helpers.AdaptiveCards
             var textAlignment = CultureInfo.CurrentCulture.TextInfo.IsRightToLeft ? AdaptiveHorizontalAlignment.Right.ToString() : AdaptiveHorizontalAlignment.Left.ToString();
 
             // Guest users may not have their given name specified in AAD, so fall back to the full name if needed
-            var senderGivenName = string.IsNullOrEmpty(sender.GivenName) ? sender.Name : sender.GivenName;
-            var recipientGivenName = string.IsNullOrEmpty(recipient.GivenName) ? recipient.Name : recipient.GivenName;
+            var senderGivenName = getName(sender);
+            var recipientGivenName = getName(recipient);
 
             // To start a chat with a guest user, use their external email, not the UPN
             var recipientUpn = !IsGuestUser(recipient) ? recipient.UserPrincipalName : recipient.Email;
@@ -76,6 +76,12 @@ namespace Icebreaker.Helpers.AdaptiveCards
         private static bool IsGuestUser(TeamsChannelAccount account)
         {
             return account.UserPrincipalName.IndexOf(ExternallyAuthenticatedUpnMarker, StringComparison.InvariantCultureIgnoreCase) >= 0;
+        }
+
+        private static string getName(TeamsChannelAccount user)
+        {
+            // Guest users may not have their given name specified in AAD, so fall back to the full name if needed
+            return string.IsNullOrEmpty(user.GivenName) ? user.Name : user.GivenName;
         }
     }
 }
