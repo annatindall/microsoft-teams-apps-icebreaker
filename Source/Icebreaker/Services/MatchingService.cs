@@ -197,21 +197,28 @@ namespace Icebreaker.Services
         /// <returns>List of pairs</returns>
         private List<List<ChannelAccount>> MakeGroups(List<ChannelAccount> users)
         {
-            if (users.Count >= groupSize)
-            {
-                this.telemetryClient.TrackTrace($"Making {users.Count / groupSize} pairs among {users.Count} users");
-            }
-            else
-            {
-                this.telemetryClient.TrackTrace($"Pairs could not be made because there is only 1 user in the team");
-            }
-
             this.Randomize(users);
 
             var groups = new List<List<ChannelAccount>>();
-            for (int i = 0; i <= users.Count - groupSize; i += groupSize)
+            int i = 0;
+            while (i <= users.Count - groupSize)
             {
                 groups.Add(users.GetRange(i, groupSize));
+                i += groupSize;
+            }
+            if (i <= users.Count - 2)
+            {
+                groups.Add(users.GetRange(i, users.Count - i));
+                i = users.Count;
+            }
+
+            if (groups.Count > 0)
+            {
+                this.telemetryClient.TrackTrace($"Made {groups.Count} groups among {users.Count} users");
+            }
+            else
+            {
+                this.telemetryClient.TrackTrace($"Groups could not be made because there is only 1 user in the team");
             }
 
             return groups;
