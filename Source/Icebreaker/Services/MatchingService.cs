@@ -96,7 +96,7 @@ namespace Icebreaker.Services
                             if (pair.Item2 == null)
                             {
                                 // Lonely person - not paired
-                                // Do something
+                                NotifyNoPairAsync(team, teamName, pair.Item1, default(CancellationToken));
                             } 
                             else 
                             {
