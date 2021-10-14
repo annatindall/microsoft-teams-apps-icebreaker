@@ -140,16 +140,14 @@ namespace Icebreaker.Services
             var cultureName = CloudConfigurationManager.GetSetting("DefaultCulture");
             Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(cultureName);
 
-            var teamsPerson2 = JObject.FromObject(group[0]).ToObject<TeamsChannelAccount>();
-
             var tasks = new List<Task<bool>>();
             foreach (ChannelAccount person in group)
             {
                 this.telemetryClient.TrackTrace($"Sending pairup notification to {person.Id}");
-                var teamsPerson = JObject.FromObject(person).ToObject<TeamsChannelAccount>();
-                var card = PairUpNotificationAdaptiveCard.GetCard(teamName, teamsPerson, teamsPerson2, this.botDisplayName);
+                var toNotify = JObject.FromObject(person).ToObject<TeamsChannelAccount>();
+                var card = PairUpNotificationAdaptiveCard.GetCard(teamName, toNotify, group, this.botDisplayName);
                 tasks.Add(
-                    this.conversationHelper.NotifyUserAsync(this.botAdapter, teamModel.ServiceUrl, teamModel.TeamId, MessageFactory.Attachment(card), teamsPerson, teamModel.TenantId, cancellationToken));
+                    this.conversationHelper.NotifyUserAsync(this.botAdapter, teamModel.ServiceUrl, teamModel.TeamId, MessageFactory.Attachment(card), toNotify, teamModel.TenantId, cancellationToken));
             }
 
             // Send notifications and return the number that was successful
