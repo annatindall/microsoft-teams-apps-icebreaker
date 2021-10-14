@@ -143,11 +143,14 @@ namespace Icebreaker.Services
             var teamsPerson1 = JObject.FromObject(pair.Item1).ToObject<TeamsChannelAccount>();
             var teamsPerson2 = JObject.FromObject(pair.Item2).ToObject<TeamsChannelAccount>();
 
+            var person1List = new LinkedList<TeamsChannelAccount> { teamsPerson1 };
+            var person2List = new LinkedList<TeamsChannelAccount> { teamsPerson2 };
+
             // Fill in person2's info in the card for person1
-            var cardForPerson1 = PairUpNotificationAdaptiveCard.GetCard(teamName, teamsPerson1, new List<TeamsChannelAccount> {teamsPerson2}, this.botDisplayName);
+            var cardForPerson1 = PairUpNotificationAdaptiveCard.GetCard(teamName, teamsPerson1, person2List, this.botDisplayName);
 
             // Fill in person1's info in the card for person2
-            var cardForPerson2 = PairUpNotificationAdaptiveCard.GetCard(teamName, teamsPerson2, new List<TeamsChannelAccount> {teamsPerson1}, this.botDisplayName);
+            var cardForPerson2 = PairUpNotificationAdaptiveCard.GetCard(teamName, teamsPerson2, person1List, this.botDisplayName);
 
             // Send notifications and return the number that was successful
             var notifyResults = await Task.WhenAll(
