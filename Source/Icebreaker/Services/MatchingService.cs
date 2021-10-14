@@ -248,6 +248,17 @@ namespace Icebreaker.Services
 
             this.Randomize(users);
 
+            var pairs = new List<Tuple<ChannelAccount, ChannelAccount>>();
+
+            int numberOfUsers = users.Count;
+
+            this.telemetryClient($"AT9: Running latest code! Number of users: {numberOfUsers}");
+
+            if (numberOfUsers % 2 == 1)
+            {
+                this.telemetryClient($"Number of users is odd");
+            }
+
             for (int i = 0; i < users.Count - 1; i += 2)
             {
                 pairs.Add(new Tuple<ChannelAccount, ChannelAccount>(users[i], users[i + 1]));
