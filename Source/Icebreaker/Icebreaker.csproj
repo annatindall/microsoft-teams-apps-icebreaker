@@ -386,6 +386,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AdaptiveCards\PairUpNotificationAdaptiveCard.cs" />
+    <Compile Include="Helpers\AdaptiveCards\NoPairNotificationAdaptiveCard.cs" />
     <Compile Include="Helpers\AdaptiveCards\UnrecognizedInputAdaptiveCard.cs" />
     <Compile Include="Helpers\AdaptiveCards\WelcomeNewMemberAdaptiveCard.cs" />
     <Compile Include="Helpers\AdaptiveCards\WelcomeTeamAdaptiveCard.cs" />
@@ -406,6 +407,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Helpers\AdaptiveCards\PairUpNotificationAdaptiveCard.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Helpers\AdaptiveCards\NoPairNotificationAdaptiveCard.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Helpers\AdaptiveCards\WelcomeNewMemberAdaptiveCard.json">

@@ -1,4 +1,4 @@
-﻿// <copyright file="PairUpNotificationAdaptiveCard.cs" company="Microsoft">
+﻿// <copyright file="NoPairNotificationAdaptiveCard.cs" company="Microsoft">
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 // </copyright>
@@ -16,7 +16,7 @@ namespace Icebreaker.Helpers.AdaptiveCards
     /// <summary>
     /// Builder class for the no pairup notification card
     /// </summary>
-    public class NoPairUpNotificationAdaptiveCard : AdaptiveCardBase
+    public class NoPairNotificationAdaptiveCard : AdaptiveCardBase
     {
         /// <summary>
         /// Default marker string in the UPN that indicates a user is externally-authenticated

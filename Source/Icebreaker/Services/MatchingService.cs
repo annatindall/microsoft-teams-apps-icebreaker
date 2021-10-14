@@ -69,6 +69,7 @@ namespace Icebreaker.Services
             // When contacting the user in 1:1, give them the button to opt-out
             var installedTeamsCount = 0;
             var pairsNotifiedCount = 0;
+            var noPairNotifiedCount = 0;
             var usersNotifiedCount = 0;
             var dbMembersCount = 0;
 
@@ -96,7 +97,11 @@ namespace Icebreaker.Services
                             if (pair.Item2 == null)
                             {
                                 // Lonely person - not paired
-                                NotifyNoPairAsync(team, teamName, pair.Item1, default(CancellationToken));
+                                noPairNotifiedCount = NotifyNoPairAsync(team, teamName, pair.Item1, default(CancellationToken));
+                                if (noPairNotifiedCount != 1)
+                                {
+                                    this.telemetryClient.TrackTrace($"Failed to send no-pairup notification to {pair.Item1}. No pair notified count = {noPairNotificationCount}");
+                                }
                             } 
                             else 
                             {
