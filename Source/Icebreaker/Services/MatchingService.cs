@@ -248,6 +248,15 @@ namespace Icebreaker.Services
                 pairs.Add(new Tuple<ChannelAccount, ChannelAccount>(users[i], users[i + 1]));
             }
 
+            int numberOfUsers = users.Count;
+
+            this.telemetryClient($"AT9: Running latest code! Number of users: {numberOfUsers}");
+
+            if (numberOfUsers % 2 == 1)
+            {
+                this.telemetryClient($"Number of users is odd");
+            }
+
             if (users.Count > 1 && users.Count % 2 == 1)
             {
                 var lonelyUser = users[users.Count - 1];
