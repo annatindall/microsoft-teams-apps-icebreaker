@@ -70,7 +70,7 @@ namespace Icebreaker.Tests.ServicesTests
 
             // Act
             // Send the message activity to the bot.
-            var pairsNotifiedCount = await this.sut.MakePairsAndNotifyAsync();
+            var groupsNotifiedCount = await this.sut.MakeGroupsAndNotifyAsync();
 
             // Assert GetInstalledTeamsAsync is called once
             this.dataProvider.Verify(m => m.GetInstalledTeamsAsync(), Times.Once);
@@ -85,7 +85,7 @@ namespace Icebreaker.Tests.ServicesTests
             this.conversationHelper.Verify(m => m.GetTeamMembers(this.botAdapter, It.IsAny<TeamInstallInfo>()), Times.Never);
 
             // No groups paired since no teams installed
-            Assert.Equal(0, pairsNotifiedCount);
+            Assert.Equal(0, groupsNotifiedCount);
         }
 
         [Fact]
@@ -112,7 +112,7 @@ namespace Icebreaker.Tests.ServicesTests
 
             // Act
             // Send the message activity to the bot.
-            var pairsNotifiedCount = await this.sut.MakePairsAndNotifyAsync();
+            var groupsNotifiedCount = await this.sut.MakeGroupsAndNotifyAsync();
 
             // Assert GetInstalledTeamsAsync is called once
             this.dataProvider.Verify(m => m.GetInstalledTeamsAsync(), Times.Once);
@@ -127,7 +127,7 @@ namespace Icebreaker.Tests.ServicesTests
             this.conversationHelper.Verify(m => m.GetTeamMembers(this.botAdapter, It.IsAny<TeamInstallInfo>()), Times.Exactly(2));
 
             // No groups paired since only 1 member exist in a team
-            Assert.Equal(0, pairsNotifiedCount);
+            Assert.Equal(0, groupsNotifiedCount);
         }
 
         [Fact]
@@ -167,7 +167,7 @@ namespace Icebreaker.Tests.ServicesTests
 
             // Act
             // Send the message activity to the bot.
-            var pairsNotifiedCount = await this.sut.MakePairsAndNotifyAsync();
+            var groupsNotifiedCount = await this.sut.MakeGroupsAndNotifyAsync();
 
             // Assert GetInstalledTeamsAsync is called once
             this.dataProvider.Verify(m => m.GetInstalledTeamsAsync(), Times.Once);
@@ -182,7 +182,7 @@ namespace Icebreaker.Tests.ServicesTests
             this.conversationHelper.Verify(m => m.GetTeamMembers(this.botAdapter, It.IsAny<TeamInstallInfo>()), Times.Exactly(2));
 
             // 2 groups are paired (1 group per team)
-            Assert.Equal(2, pairsNotifiedCount);
+            Assert.Equal(2, groupsNotifiedCount);
         }
 
         [Fact]
@@ -227,7 +227,7 @@ namespace Icebreaker.Tests.ServicesTests
 
             // Act
             // Send the message activity to the bot.
-            var pairsNotifiedCount = await this.sut.MakePairsAndNotifyAsync();
+            var groupsNotifiedCount = await this.sut.MakeGroupsAndNotifyAsync();
 
             // Assert GetInstalledTeamsAsync is called once
             this.dataProvider.Verify(m => m.GetInstalledTeamsAsync(), Times.Once);
@@ -242,7 +242,7 @@ namespace Icebreaker.Tests.ServicesTests
             this.conversationHelper.Verify(m => m.GetTeamMembers(this.botAdapter, It.IsAny<TeamInstallInfo>()), Times.Exactly(2));
 
             // No groups paired since only 1 member opted-in
-            Assert.Equal(0, pairsNotifiedCount);
+            Assert.Equal(0, groupsNotifiedCount);
         }
 
         [Fact]
@@ -287,7 +287,7 @@ namespace Icebreaker.Tests.ServicesTests
 
             // Act
             // Send the message activity to the bot.
-            var pairsNotifiedCount = await this.sut.MakePairsAndNotifyAsync();
+            var groupsNotifiedCount = await this.sut.MakeGroupsAndNotifyAsync();
 
             // Assert GetInstalledTeamsAsync is called once
             this.dataProvider.Verify(m => m.GetInstalledTeamsAsync(), Times.Once);
@@ -302,7 +302,7 @@ namespace Icebreaker.Tests.ServicesTests
             this.conversationHelper.Verify(m => m.GetTeamMembers(this.botAdapter, It.IsAny<TeamInstallInfo>()), Times.Exactly(2));
 
             // 2 groups are paired (1 group per team)
-            Assert.Equal(2, pairsNotifiedCount);
+            Assert.Equal(2, groupsNotifiedCount);
         }
 
         [Fact]
@@ -346,7 +346,7 @@ namespace Icebreaker.Tests.ServicesTests
             // Act
 
             // Send the message activity to the bot.
-            var pairsNotifiedCount = await sut.MakePairsAndNotifyAsync();
+            var groupsNotifiedCount = await sut.MakeGroupsAndNotifyAsync();
 
             // Set original value back
             ConfigurationManager.AppSettings[this.maxPairsSettingsKey] = maxPairUpsPerTeam;
@@ -364,7 +364,7 @@ namespace Icebreaker.Tests.ServicesTests
             this.conversationHelper.Verify(m => m.GetTeamMembers(this.botAdapter, It.IsAny<TeamInstallInfo>()), Times.Once);
 
             // No pairs since max limit is reached
-            Assert.Equal(0, pairsNotifiedCount);
+            Assert.Equal(0, groupsNotifiedCount);
         }
     }
 }

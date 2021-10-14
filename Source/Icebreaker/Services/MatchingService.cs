@@ -34,6 +34,8 @@ namespace Icebreaker.Services
         private readonly int maxPairUpsPerTeam;
         private readonly string botDisplayName;
 
+        private const int groupSize = 3;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MatchingService"/> class.
         /// </summary>
@@ -52,23 +54,23 @@ namespace Icebreaker.Services
         }
 
         /// <summary>
-        /// Generate pairups and send pairup notifications.
+        /// Generate groups and send notifications.
         /// </summary>
-        /// <returns>The number of pairups that were made</returns>
-        public async Task<int> MakePairsAndNotifyAsync()
+        /// <returns>The number of groups that were made</returns>
+        public async Task<int> MakeGroupsAndNotifyAsync()
         {
-            this.telemetryClient.TrackTrace("Making pairups");
+            this.telemetryClient.TrackTrace("Making groups");
 
             // Recall all the teams where we have been added
             // For each team where bot has been added:
             //     Pull the roster of the team
-            //     Remove the members who have opted out of pairups
-            //     Match each member with someone else
-            //     Save this pair
-            // Now notify each pair found in 1:1 and ask them to reach out to the other person
-            // When contacting the user in 1:1, give them the button to opt-out
+            //     Remove the members who have opted out of groups
+            //     Match each member with others
+            //     Save this group
+            // Now notify each group found and ask them to reach out to the group
+            // When contacting the user, give them the button to opt-out
             var installedTeamsCount = 0;
-            var pairsNotifiedCount = 0;
+            var groupsNotifiedCount = 0;
             var usersNotifiedCount = 0;
             var dbMembersCount = 0;
 
@@ -91,10 +93,10 @@ namespace Icebreaker.Services
                         var teamName = await this.conversationHelper.GetTeamNameByIdAsync(this.botAdapter, team);
                         var optedInUsers = await this.GetOptedInUsersAsync(dbMembersLookup, team);
 
-                        foreach (var pair in this.MakePairs(optedInUsers).Take(this.maxPairUpsPerTeam))
+                        foreach (var group in this.MakeGroups(optedInUsers).Take(this.maxPairUpsPerTeam))
                         {
-                            usersNotifiedCount += await this.NotifyPairAsync(team, teamName, pair, default(CancellationToken));
-                            pairsNotifiedCount++;
+                            usersNotifiedCount += await this.NotifyGroupAsync(team, teamName, group, default(CancellationToken));
+                            groupsNotifiedCount++;
                         }
                     }
                     catch (Exception ex)
@@ -114,14 +116,14 @@ namespace Icebreaker.Services
             var properties = new Dictionary<string, string>
             {
                 { "InstalledTeamsCount", installedTeamsCount.ToString() },
-                { "PairsNotifiedCount", pairsNotifiedCount.ToString() },
+                { "groupsNotifiedCount", groupsNotifiedCount.ToString() },
                 { "UsersNotifiedCount", usersNotifiedCount.ToString() },
                 { "DBMembersCount", dbMembersCount.ToString() },
             };
             this.telemetryClient.TrackEvent("ProcessedPairups", properties);
 
-            this.telemetryClient.TrackTrace($"Made {pairsNotifiedCount} pairups, {usersNotifiedCount} notifications sent");
-            return pairsNotifiedCount;
+            this.telemetryClient.TrackTrace($"Made {groupsNotifiedCount} pairups, {usersNotifiedCount} notifications sent");
+            return groupsNotifiedCount;
         }
 
         /// <summary>
@@ -132,27 +134,26 @@ namespace Icebreaker.Services
         /// <param name="pair">The pairup</param>
         /// <param name="cancellationToken">Propagates notification that operations should be canceled.</param>
         /// <returns>Number of users notified successfully</returns>
-        private async Task<int> NotifyPairAsync(TeamInstallInfo teamModel, string teamName, Tuple<ChannelAccount, ChannelAccount> pair, CancellationToken cancellationToken)
+        private async Task<int> NotifyGroupAsync(TeamInstallInfo teamModel, string teamName, List<ChannelAccount> group, CancellationToken cancellationToken)
         {
             // Get the default culture info to use in resource files.
             var cultureName = CloudConfigurationManager.GetSetting("DefaultCulture");
             Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(cultureName);
 
-            this.telemetryClient.TrackTrace($"Sending pairup notification to {pair.Item1.Id} and {pair.Item2.Id}");
+            var teamsPerson2 = JObject.FromObject(group[0]).ToObject<TeamsChannelAccount>();
 
-            var teamsPerson1 = JObject.FromObject(pair.Item1).ToObject<TeamsChannelAccount>();
-            var teamsPerson2 = JObject.FromObject(pair.Item2).ToObject<TeamsChannelAccount>();
-
-            // Fill in person2's info in the card for person1
-            var cardForPerson1 = PairUpNotificationAdaptiveCard.GetCard(teamName, teamsPerson1, teamsPerson2, this.botDisplayName);
-
-            // Fill in person1's info in the card for person2
-            var cardForPerson2 = PairUpNotificationAdaptiveCard.GetCard(teamName, teamsPerson2, teamsPerson1, this.botDisplayName);
+            var tasks = new List<Task>();
+            foreach (ChannelAccount person in group)
+            {
+                this.telemetryClient.TrackTrace($"Sending pairup notification to {person.Id}");
+                var teamsPerson = JObject.FromObject(person).ToObject<TeamsChannelAccount>();
+                var card = PairUpNotificationAdaptiveCard.GetCard(teamName, teamsPerson, teamsPerson2, this.botDisplayName);
+                tasks.Add(
+                    this.conversationHelper.NotifyUserAsync(this.botAdapter, teamModel.ServiceUrl, teamModel.TeamId, MessageFactory.Attachment(card), teamsPerson, teamModel.TenantId, cancellationToken));
+            }
 
             // Send notifications and return the number that was successful
-            var notifyResults = await Task.WhenAll(
-                this.conversationHelper.NotifyUserAsync(this.botAdapter, teamModel.ServiceUrl, teamModel.TeamId, MessageFactory.Attachment(cardForPerson1), teamsPerson1, teamModel.TenantId, cancellationToken),
-                this.conversationHelper.NotifyUserAsync(this.botAdapter, teamModel.ServiceUrl, teamModel.TeamId, MessageFactory.Attachment(cardForPerson2), teamsPerson2, teamModel.TenantId, cancellationToken));
+            var notifyResults = await Task.WhenAll(tasks);
             return notifyResults.Count(wasNotified => wasNotified);
         }
 
@@ -194,11 +195,11 @@ namespace Icebreaker.Services
         /// </summary>
         /// <param name="users">Users accounts</param>
         /// <returns>List of pairs</returns>
-        private List<Tuple<ChannelAccount, ChannelAccount>> MakePairs(List<ChannelAccount> users)
+        private List<List<ChannelAccount>> MakeGroups(List<ChannelAccount> users)
         {
-            if (users.Count > 1)
+            if (users.Count >= groupSize)
             {
-                this.telemetryClient.TrackTrace($"Making {users.Count / 2} pairs among {users.Count} users");
+                this.telemetryClient.TrackTrace($"Making {users.Count / groupSize} pairs among {users.Count} users");
             }
             else
             {
@@ -207,13 +208,13 @@ namespace Icebreaker.Services
 
             this.Randomize(users);
 
-            var pairs = new List<Tuple<ChannelAccount, ChannelAccount>>();
-            for (int i = 0; i < users.Count - 1; i += 2)
+            var groups = new List<List<ChannelAccount>>();
+            for (int i = 0; i <= users.Count - groupSize; i += groupSize)
             {
-                pairs.Add(new Tuple<ChannelAccount, ChannelAccount>(users[i], users[i + 1]));
+                groups.Add(users.GetRange(i, groupSize));
             }
 
-            return pairs;
+            return groups;
         }
 
         /// <summary>

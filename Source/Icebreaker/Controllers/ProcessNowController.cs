@@ -53,7 +53,7 @@ namespace Icebreaker.Controllers
                     // This avoids a race condition in MicrosoftAppCredentials.GetTokenAsync that can lead it to return an expired token
                     await this.botCredentials.GetTokenAsync();
 
-                    HostingEnvironment.QueueBackgroundWorkItem(ct => this.MakePairsAsync());
+                    HostingEnvironment.QueueBackgroundWorkItem(ct => this.MakeGroupsAsync());
                     return this.StatusCode(System.Net.HttpStatusCode.OK);
                 }
             }
@@ -61,9 +61,9 @@ namespace Icebreaker.Controllers
             return this.Unauthorized();
         }
 
-        private async Task<int> MakePairsAsync()
+        private async Task<int> MakeGroupsAsync()
         {
-            return await this.matchingService.MakePairsAndNotifyAsync();
+            return await this.matchingService.MakeGroupsAndNotifyAsync();
         }
     }
 }
