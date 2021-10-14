@@ -31,34 +31,43 @@ namespace Icebreaker.Helpers.AdaptiveCards
         /// </summary>
         /// <param name="teamName">The team name.</param>
         /// <param name="sender">The user who will be sending this card.</param>
-        /// <param name="recipient">The user who will be receiving this card.</param>
+        /// <param name="recipients">The users who will be receiving this card.</param>
         /// <param name="botDisplayName">The bot display name.</param>
         /// <returns>Pairup notification card</returns>
-        public static Attachment GetCard(string teamName, TeamsChannelAccount sender, TeamsChannelAccount recipient, string botDisplayName)
+        public static Attachment GetCard(string teamName, TeamsChannelAccount sender, List<TeamsChannelAccount> recipients, string botDisplayName)
         {
             // Set alignment of text based on default locale.
             var textAlignment = CultureInfo.CurrentCulture.TextInfo.IsRightToLeft ? AdaptiveHorizontalAlignment.Right.ToString() : AdaptiveHorizontalAlignment.Left.ToString();
 
             // Guest users may not have their given name specified in AAD, so fall back to the full name if needed
             var senderGivenName = getName(sender);
-            var recipientGivenName = getName(recipient);
 
-            // To start a chat with a guest user, use their external email, not the UPN
-            var recipientUpn = !IsGuestUser(recipient) ? recipient.UserPrincipalName : recipient.Email;
+            var recipientUpns = new List<String> {};
+            var recipientGivenNames = new List<String> {};
+            foreach (TeamsChannelAccount recipient in recipients)
+            {
+                var recipientGivenName = getName(recipient);
+                recipientGivenNames.Add(recipientGivenName);
 
-            var meetingTitle = string.Format(Resources.MeetupTitle, senderGivenName, recipientGivenName);
-            var meetingContent = string.Format(Resources.MeetupContent, botDisplayName);
-            var recipientUpns = new List<String> { recipientUpn, recipientUpn };
+                // To start a chat with a guest user, use their external email, not the UPN
+                var recipientUpn = !IsGuestUser(recipient) ? recipient.UserPrincipalName : recipient.Email;
+                recipientUpns.Add(recipientUpn);
+            }
+
             var recipientUpnsString = string.Join(",", recipientUpns);
+            var recipientGivenNamesString = string.Join(",", recipientGivenNames);
+
+            var meetingTitle = string.Format(Resources.MeetupTitle, senderGivenName, recipientGivenNamesString);
+            var meetingContent = string.Format(Resources.MeetupContent, botDisplayName);
             var meetingLink = "https://teams.microsoft.com/l/meeting/new?subject=" + Uri.EscapeDataString(meetingTitle) + "&attendees=" + recipientUpnsString + "&content=" + Uri.EscapeDataString(meetingContent);
 
             var cardData = new
             {
                 matchUpCardTitleContent = Resources.MatchUpCardTitleContent,
-                matchUpCardMatchedText = string.Format(Resources.MatchUpCardMatchedText, recipient.Name),
-                matchUpCardContentPart1 = string.Format(Resources.MatchUpCardContentPart1, botDisplayName, teamName, recipient.Name),
+                matchUpCardMatchedText = string.Format(Resources.MatchUpCardMatchedText, recipientGivenNamesString),
+                matchUpCardContentPart1 = string.Format(Resources.MatchUpCardContentPart1, botDisplayName, teamName, matchNames),
                 matchUpCardContentPart2 = Resources.MatchUpCardContentPart2,
-                chatWithMatchButtonText = string.Format(Resources.ChatWithMatchButtonText, recipientGivenName),
+                chatWithMatchButtonText = string.Format(Resources.ChatWithMatchButtonText, recipientGivenNamesString),
                 chatWithMessageGreeting = Uri.EscapeDataString(Resources.ChatWithMessageGreeting),
                 pauseMatchesButtonText = Resources.PausePairingsButtonText,
                 proposeMeetupButtonText = Resources.ProposeMeetupButtonText,
