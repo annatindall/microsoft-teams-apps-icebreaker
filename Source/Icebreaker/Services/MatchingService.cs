@@ -34,8 +34,6 @@ namespace Icebreaker.Services
         private readonly int maxPairUpsPerTeam;
         private readonly string botDisplayName;
 
-        private const int groupSize = 3;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="MatchingService"/> class.
         /// </summary>
@@ -50,6 +48,7 @@ namespace Icebreaker.Services
             this.telemetryClient = telemetryClient;
             this.botAdapter = botAdapter;
             this.maxPairUpsPerTeam = Convert.ToInt32(CloudConfigurationManager.GetSetting("MaxPairUpsPerTeam"));
+            this.groupSize = Convert.ToInt32(CloudConfigurationManager.GetSetting("GroupSize"));
             this.botDisplayName = CloudConfigurationManager.GetSetting("BotDisplayName");
         }
 
@@ -197,9 +196,9 @@ namespace Icebreaker.Services
         /// <returns>List of pairs</returns>
         private List<List<ChannelAccount>> MakeGroups(List<ChannelAccount> users)
         {
-            if (users.Count >= groupSize)
+            if (users.Count >= this.groupSize)
             {
-                this.telemetryClient.TrackTrace($"Making {users.Count / groupSize} pairs among {users.Count} users");
+                this.telemetryClient.TrackTrace($"Making {users.Count / this.groupSize} pairs among {users.Count} users");
             }
             else
             {
@@ -209,9 +208,9 @@ namespace Icebreaker.Services
             this.Randomize(users);
 
             var groups = new List<List<ChannelAccount>>();
-            for (int i = 0; i <= users.Count - groupSize; i += groupSize)
+            for (int i = 0; i <= users.Count - this.groupSize; i += this.groupSize)
             {
-                groups.Add(users.GetRange(i, groupSize));
+                groups.Add(users.GetRange(i, this.groupSize));
             }
 
             return groups;
