@@ -65,6 +65,14 @@
                 "description": "Default culture."
             }
         },
+        "groupSize": {
+            "type": "int",
+            "minValue": 2,
+            "defaultValue": 2,
+            "metadata": {
+                "description": "The size of groups to create."
+            }
+        },
         "pairingWeekInterval": {
             "type": "int",
             "minValue": 1,
@@ -266,6 +274,10 @@
                         {
                             "name": "CosmosCollectionUsers",
                             "value": "UsersOptInStatus"
+                        },
+                        {
+                            "name": "GroupSize",
+                            "value": "[parameters('groupSize')]"
                         },
                         {
                             "name": "MaxPairUpsPerTeam",

@@ -32,9 +32,8 @@ namespace Icebreaker.Services
         private readonly TelemetryClient telemetryClient;
         private readonly BotAdapter botAdapter;
         private readonly int maxPairUpsPerTeam;
+        private readonly int groupSize;
         private readonly string botDisplayName;
-
-        private const int groupSize = 3;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MatchingService"/> class.
@@ -50,6 +49,7 @@ namespace Icebreaker.Services
             this.telemetryClient = telemetryClient;
             this.botAdapter = botAdapter;
             this.maxPairUpsPerTeam = Convert.ToInt32(CloudConfigurationManager.GetSetting("MaxPairUpsPerTeam"));
+            this.groupSize = Convert.ToInt32(CloudConfigurationManager.GetSetting("GroupSize"));
             this.botDisplayName = CloudConfigurationManager.GetSetting("BotDisplayName");
         }
 
@@ -201,10 +201,10 @@ namespace Icebreaker.Services
 
             var groups = new List<List<ChannelAccount>>();
             int i = 0;
-            while (i <= users.Count - groupSize)
+            while (i <= users.Count - this.groupSize)
             {
-                groups.Add(users.GetRange(i, groupSize));
-                i += groupSize;
+                groups.Add(users.GetRange(i, this.groupSize));
+                i += this.groupSize;
             }
             if (i <= users.Count - 2)
             {
