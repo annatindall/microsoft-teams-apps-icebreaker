@@ -153,7 +153,8 @@ namespace Icebreaker.Services
             }
 
             // Send notifications and return the number that was successful
-            return (await Task.WhenAll(tasks)).Count(wasNotified => wasNotified);
+            var notifyResults = await Task.WhenAll(tasks.ToArray());
+            return notifyResults.Count(wasNotified => wasNotified);
         }
 
         /// <summary>
