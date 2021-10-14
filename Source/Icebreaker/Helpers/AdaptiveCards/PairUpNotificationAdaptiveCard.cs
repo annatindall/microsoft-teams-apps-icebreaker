@@ -6,6 +6,7 @@
 namespace Icebreaker.Helpers.AdaptiveCards
 {
     using System;
+    using System.Collections;
     using System.Globalization;
     using global::AdaptiveCards;
     using global::AdaptiveCards.Templating;
