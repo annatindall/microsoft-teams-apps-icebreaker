@@ -375,6 +375,7 @@
     <Compile Include="Controllers\ProcessNowController.cs" />
     <Compile Include="Helpers\AdaptiveCard.cs" />
     <Compile Include="Helpers\AdaptiveCards\AdaptiveCardBase.cs" />
+    <Compile Include="Helpers\AdaptiveCards\NoPairNotificationAdaptiveCard.cs" />
     <Compile Include="Helpers\CardTemplateHelper.cs" />
     <Compile Include="Helpers\MatchingActions.cs" />
     <Compile Include="Helpers\SecretsHelper.cs" />
@@ -386,6 +387,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AdaptiveCards\PairUpNotificationAdaptiveCard.cs" />
+	<Compile Include="Helpers\AdaptiveCards\NoPairNotificationAdaptiveCard.cs" />
     <Compile Include="Helpers\AdaptiveCards\UnrecognizedInputAdaptiveCard.cs" />
     <Compile Include="Helpers\AdaptiveCards\WelcomeNewMemberAdaptiveCard.cs" />
     <Compile Include="Helpers\AdaptiveCards\WelcomeTeamAdaptiveCard.cs" />
@@ -406,6 +408,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Helpers\AdaptiveCards\PairUpNotificationAdaptiveCard.json">
+	<Content Include="Helpers\AdaptiveCards\NoPairNotificationAdaptiveCard.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Helpers\AdaptiveCards\WelcomeNewMemberAdaptiveCard.json">
@@ -424,6 +427,9 @@
     <Content Include="lib\jquery\jquery.min.map" />
     <Content Include="..\.editorconfig">
       <Link>.editorconfig</Link>
+    </Content>
+    <Content Include="Helpers\AdaptiveCards\NoPairNotificationAdaptiveCard.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
