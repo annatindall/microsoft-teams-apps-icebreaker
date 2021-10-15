@@ -39,6 +39,10 @@ This can be due to a couple of issues, but an easy "gotcha" is that, when creati
 Change the "Supported account types" setting for the app by navigating to App registrations, finding your app, navigating to the Authentication section under Manage, and changing the "Supported account types" setting to "Accounts in any organizational directory."
 ![Fix for setting Microsoft Azure AD application to multi-tenant](images/troubleshooting_multitenant_app_fix.png)
 
+
+## Diagnostics
+In "Application Insights" in Azure, you can view all logs under "Transaction Search".
+
 ## Didn't find your problem here?
 
 Please, report the issue [here](https://github.com/OfficeDev/microsoft-teams-icebreaker-app/issues/new). Thank you!
