@@ -1,0 +1,49 @@
+﻿{
+  "type": "AdaptiveCard",
+  "body": [
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "TextBlock",
+          "size": "Medium",
+          "weight": "Bolder",
+          "text": "${noMatchUpCardTitleContent}",
+          "wrap": true,
+          "maxLines": 2,
+          "horizontalAlignment": "${textAlignment}"
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "Container",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "${noMatchUpCardContent}",
+              "wrap": true,
+              "horizontalAlignment": "${textAlignment}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "${pauseMatchesButtonText}",
+      "data": {
+        "msteams": {
+          "type": "messageBack",
+          "displayText": "${pauseMatchesButtonText}",
+          "text": "optout"
+        }
+      }
+    }
+  ],
+  "version": "1.0"
+}

@@ -16,6 +16,11 @@ namespace Icebreaker.Helpers
         PairUpNotification,
 
         /// <summary>
+        /// Represents the no-pair card sent for a group of one
+        /// </summary>
+        NoPairNotification,
+
+        /// <summary>
         /// Represents unrecognized card when bot receives non-supported command
         /// </summary>
         UnrecognizedInput,

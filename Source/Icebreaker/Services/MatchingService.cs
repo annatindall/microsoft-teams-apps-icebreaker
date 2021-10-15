@@ -147,7 +147,7 @@ namespace Icebreaker.Services
                 this.telemetryClient.TrackTrace($"Sending grouping notification to {teamsPerson.Id}");
 
                 var restOfGroup = new List<TeamsChannelAccount>(teamsGroup).FindAll(person => person.AadObjectId != teamsPerson.AadObjectId);
-                var card = PairUpNotificationAdaptiveCard.GetCard(teamName, teamsPerson, restOfGroup, this.botDisplayName);
+                var card = PairUpCardFactory.GetCard(teamName, teamsPerson, restOfGroup, this.botDisplayName);
                 tasks.Add(
                     this.conversationHelper.NotifyUserAsync(this.botAdapter, teamModel.ServiceUrl, teamModel.TeamId, MessageFactory.Attachment(card), teamsPerson, teamModel.TenantId, cancellationToken));
             }
