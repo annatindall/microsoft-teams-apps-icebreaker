@@ -42,8 +42,8 @@ namespace Icebreaker.Helpers.AdaptiveCards
             var senderGivenName = string.IsNullOrEmpty(sender.GivenName) ? sender.Name : sender.GivenName;
             var cardData = new
             {
-                noMatchUpCardTitleContent = "Sorry you weren't matched to a pair this time :-(", // Resources.NoMatchUpCardTitleContent,
-                noMatchUpCardContent = $"Hi there again, I'm {botDisplayName} in {teamName}. A bot that pairs you with a new coworker to meet each week. This time we didn't find you a match, but we'll make sure you are matched next time!</value>", // string.Format(Resources.NoMatchUpCardContent, botDisplayName, teamName),
+                noMatchUpCardTitleContent = "Sorry, no matches this time", // Resources.NoMatchUpCardTitleContent,
+                noMatchUpCardContent = $"Hi there again, I'm {botDisplayName} in {teamName}. A bot that pairs you with a new coworker to meet each week. You didn't get matched to a group this round, but hopefully I'll help you meet people next time! ", // string.Format(Resources.NoMatchUpCardContent, botDisplayName, teamName),
                 pauseMatchesButtonText = Resources.PausePairingsButtonText,
                 textAlignment,
             };
