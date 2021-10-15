@@ -45,10 +45,11 @@ namespace Icebreaker.Helpers.AdaptiveCards
 
             var recipientUpns = new List<String> {};
             var recipientGivenNames = new List<String> {};
+            var recipientNames = new List<String> {};
             foreach (TeamsChannelAccount recipient in recipients)
             {
-                var recipientGivenName = GetName(recipient);
-                recipientGivenNames.Add(recipientGivenName);
+                recipientGivenNames.Add(GetName(recipient));
+                recipientNames.Add(recipient.Name);
 
                 // To start a chat with a guest user, use their external email, not the UPN
                 var recipientUpn = !IsGuestUser(recipient) ? recipient.UserPrincipalName : recipient.Email;
@@ -64,7 +65,7 @@ namespace Icebreaker.Helpers.AdaptiveCards
             var cardData = new
             {
                 matchUpCardTitleContent = Resources.MatchUpCardTitleContent,
-                matchUpCardMatchedText = recipients.Count > 1 ? string.Format(Resources.MatchUpCardMatchedTextMultiple, "\r\n- " + string.Join("\r\n- ", recipientGivenNames)) : string.Format(Resources.MatchUpCardMatchedText, recipientGivenNames[0]),
+                matchUpCardMatchedText = recipients.Count > 1 ? string.Format(Resources.MatchUpCardMatchedTextMultiple, "\r\n- " + string.Join("\r\n- ", recipientNames)) : string.Format(Resources.MatchUpCardMatchedText, recipientGivenNames[0]),
                 matchUpCardContentPart1 = string.Format(Resources.MatchUpCardContentPart1, botDisplayName, teamName),
                 matchUpCardContentPart2 = Resources.MatchUpCardContentPart2,
                 chatWithMatchButtonText = recipients.Count > 1 ? Resources.ChatWithGroupButtonText : string.Format(Resources.ChatWithMatchButtonText, recipientGivenNames[0]),
