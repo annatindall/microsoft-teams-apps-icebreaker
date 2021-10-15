@@ -56,19 +56,18 @@ namespace Icebreaker.Helpers.AdaptiveCards
             }
 
             var recipientUpnsString = string.Join(",", recipientUpns);
-            var recipientGivenNamesString = string.Join(",", recipientGivenNames);
 
-            var meetingTitle = string.Format(Resources.MeetupTitle, senderGivenName, recipientGivenNamesString);
+            var meetingTitle = string.Format(Resources.MeetupTitle, senderGivenName, string.Join(" / ", recipientGivenNames));
             var meetingContent = string.Format(Resources.MeetupContent, botDisplayName);
             var meetingLink = "https://teams.microsoft.com/l/meeting/new?subject=" + Uri.EscapeDataString(meetingTitle) + "&attendees=" + recipientUpnsString + "&content=" + Uri.EscapeDataString(meetingContent);
 
             var cardData = new
             {
                 matchUpCardTitleContent = Resources.MatchUpCardTitleContent,
-                matchUpCardMatchedText = string.Format(Resources.MatchUpCardMatchedText, recipientGivenNamesString),
-                matchUpCardContentPart1 = string.Format(Resources.MatchUpCardContentPart1, botDisplayName, teamName, recipientGivenNamesString),
+                matchUpCardMatchedText = recipients.Count > 1 ? string.Format(Resources.MatchUpCardMatchedTextMultiple, "- " + string.Join("\\r- ", recipientGivenNames)) : string.Format(Resources.MatchUpCardMatchedText, recipientGivenNames[0]),
+                matchUpCardContentPart1 = string.Format(Resources.MatchUpCardContentPart1, botDisplayName, teamName),
                 matchUpCardContentPart2 = Resources.MatchUpCardContentPart2,
-                chatWithMatchButtonText = string.Format(Resources.ChatWithMatchButtonText, recipientGivenNamesString),
+                chatWithMatchButtonText = recipients.Count > 1 ? Resources.ChatWithGroupButtonText : string.Format(Resources.ChatWithMatchButtonText, recipientGivenNames[0]),
                 chatWithMessageGreeting = Uri.EscapeDataString(Resources.ChatWithMessageGreeting),
                 pauseMatchesButtonText = Resources.PausePairingsButtonText,
                 proposeMeetupButtonText = Resources.ProposeMeetupButtonText,
