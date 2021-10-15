@@ -141,11 +141,13 @@ namespace Icebreaker.Services
             Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(cultureName);
 
             var tasks = new List<Task<bool>>();
-            var teamsGroup = group.Match(x => JObject.FromObject(x).ToObject<TeamsChannelAccount>());
+            var teamsGroup = group.Select(x => JObject.FromObject(x).ToObject<TeamsChannelAccount>());
             foreach (TeamsChannelAccount teamsPerson in group)
             {
-                this.telemetryClient.TrackTrace($"Sending pairup notification to {person.Id}");
-                var restOfGroup = new List<TeamsChannelAccount>(teamsGroup).remove(teamsPerson);
+                this.telemetryClient.TrackTrace($"Sending grouping notification to {teamsPerson.Id}");
+
+                var restOfGroup = new List<TeamsChannelAccount>(teamsGroup);
+                restOfGroup.Remove(teamsPerson);
                 var card = PairUpNotificationAdaptiveCard.GetCard(teamName, teamsPerson, restOfGroup, this.botDisplayName);
                 tasks.Add(
                     this.conversationHelper.NotifyUserAsync(this.botAdapter, teamModel.ServiceUrl, teamModel.TeamId, MessageFactory.Attachment(card), teamsPerson, teamModel.TenantId, cancellationToken));
