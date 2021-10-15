@@ -59,7 +59,8 @@ Here is a video walk-through of the manual deployment, if you'd like to follow a
       - The [Base Resource Name] must be available. For example, if you select contoso-icebreaker as the base name, the name contoso-icebreaker must be available (not taken); otherwise, it will prompt you to confirmation dialog to update the existing resources.
     - `tenantId` - Tenant Id where the teams application will be installed. If the Azure subscription is in the same tenant, copy `subscriptionTenantId` parameter value.
         > **IMPORTANT**: If your Azure subscription is in a different tenant than the tenant where you want to run Icebreaker, please update the Tenant Id field with the tenant where you want to **run** Icebreaker.
-    - `pairingWeekInterval` The number of weeks between pairings. Default value 1
+    - `groupSize` The size of the groups Icebreaker should create. Default value: 2
+    - `pairingWeekInterval` The number of weeks between pairings. Default value: 1
     - `pairingDayOfWeek` The day of the week when pairings are created. Default value: Monday
     - `pairingHour` The hour at which pairings are created. Default value: 10
     - `pairingTimeZone` The time zone for the hour at which pairings are created. Default value: Pacific Standard Time
