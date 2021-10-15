@@ -64,7 +64,7 @@ namespace Icebreaker.Helpers.AdaptiveCards
             var cardData = new
             {
                 matchUpCardTitleContent = Resources.MatchUpCardTitleContent,
-                matchUpCardMatchedText = recipients.Count > 1 ? string.Format(Resources.MatchUpCardMatchedTextMultiple, "- " + string.Join("\\r\\n- ", recipientGivenNames)) : string.Format(Resources.MatchUpCardMatchedText, recipientGivenNames[0]),
+                matchUpCardMatchedText = recipients.Count > 1 ? string.Format(Resources.MatchUpCardMatchedTextMultiple, "\r\n- " + string.Join("\r\n- ", recipientGivenNames)) : string.Format(Resources.MatchUpCardMatchedText, recipientGivenNames[0]),
                 matchUpCardContentPart1 = string.Format(Resources.MatchUpCardContentPart1, botDisplayName, teamName),
                 matchUpCardContentPart2 = Resources.MatchUpCardContentPart2,
                 chatWithMatchButtonText = recipients.Count > 1 ? Resources.ChatWithGroupButtonText : string.Format(Resources.ChatWithMatchButtonText, recipientGivenNames[0]),

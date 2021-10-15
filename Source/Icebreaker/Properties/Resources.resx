@@ -174,7 +174,7 @@
     <comment>Second part of the match up card main content</comment>
   </data>
   <data name="MatchUpCardMatchedTextMultiple" xml:space="preserve">
-    <value>You've been matched with:\r\n{0}</value>
+    <value>You've been matched with:{0}</value>
     <comment>The text saying who the user has been matched up with (group of more than two)</comment>
   </data>
   <data name="MatchUpCardMatchedText" xml:space="preserve">
