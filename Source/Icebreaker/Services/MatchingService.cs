@@ -131,7 +131,7 @@ namespace Icebreaker.Services
         /// </summary>
         /// <param name="teamModel">DB team model info.</param>
         /// <param name="teamName">MS-Teams team name</param>
-        /// <param name="pair">The pairup</param>
+        /// <param name="group">The group to notify</param>
         /// <param name="cancellationToken">Propagates notification that operations should be canceled.</param>
         /// <returns>Number of users notified successfully</returns>
         private async Task<int> NotifyGroupAsync(TeamInstallInfo teamModel, string teamName, List<ChannelAccount> group, CancellationToken cancellationToken)
@@ -198,21 +198,29 @@ namespace Icebreaker.Services
         /// <returns>List of pairs</returns>
         private List<List<ChannelAccount>> MakeGroups(List<ChannelAccount> users)
         {
-            if (users.Count >= this.groupSize)
-            {
-                this.telemetryClient.TrackTrace($"Making {users.Count / this.groupSize} pairs among {users.Count} users");
-            }
-            else
-            {
-                this.telemetryClient.TrackTrace($"Pairs could not be made because there is only 1 user in the team");
-            }
-
             this.Randomize(users);
 
             var groups = new List<List<ChannelAccount>>();
-            for (int i = 0; i <= users.Count - this.groupSize; i += this.groupSize)
+            int i = 0;
+            while (i <= users.Count - this.groupSize)
             {
                 groups.Add(users.GetRange(i, this.groupSize));
+                i += this.groupSize;
+            }
+
+            if (i <= users.Count - 2)
+            {
+                groups.Add(users.GetRange(i, users.Count - i));
+                i = users.Count;
+            }
+
+            if (groups.Count > 0)
+            {
+                this.telemetryClient.TrackTrace($"Made {groups.Count} groups among {users.Count} users");
+            }
+            else
+            {
+                this.telemetryClient.TrackTrace($"Groups could not be made because there is only 1 user in the team");
             }
 
             return groups;
