@@ -24,11 +24,7 @@
     "Description": "Tenant Id where the teams application will be installed. If the Azure subscription is in the same tenant, update with \"subscriptionTenantId\" parameter value."
   },
    "groupSize": {
-    "Value": "2",
-    "Description": "The size of groups to create."
-  },
-  "groupSize": {
-    "Value": "2",
+    "Value": "3",
     "Description": "The size of groups to create."
   },
   "pairingWeekInterval": {
