@@ -210,10 +210,15 @@ namespace Icebreaker.Services
                 i += this.groupSize;
             }
 
-            if (i <= users.Count - 2)
+            // Take remaining users and put them in a smaller group. This may be a group of one.
+            if (i < users.Count)
             {
                 groups.Add(users.GetRange(i, users.Count - i));
-                i = users.Count;
+
+                if (i == users.Count - 1)
+                {
+                    this.telemetryClient.TrackTrace($"Final group only contains one user");
+                }
             }
 
             if (groups.Count > 0)
@@ -222,7 +227,7 @@ namespace Icebreaker.Services
             }
             else
             {
-                this.telemetryClient.TrackTrace($"Groups could not be made because there is only 1 user in the team");
+                this.telemetryClient.TrackTrace($"Groups could not be made because there are no users in the team");
             }
 
             return groups;
