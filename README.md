@@ -3,7 +3,7 @@
 | [Documentation](https://github.com/OfficeDev/microsoft-teams-icebreaker-app/wiki) | [Deployment guide](https://github.com/OfficeDev/microsoft-teams-icebreaker-app/wiki/Deployment-guide) | [Architecture](https://github.com/OfficeDev/microsoft-teams-icebreaker-app/wiki/Solution-overview) |
 | ---- | ---- | ---- |
 
-Many good things in life come about through happenstance. Icebreaker enables happenstance for your team. Icebreaker is a Teams bot that helps the whole team get closer by pairing up members every week at random to meet for coffee, burgers, pizza, or a walk around the block. The bot does the heavy lifting of finding a new person to meet with each week, and aids in scheduling the meetup.
+Many good things in life come about through happenstance. Icebreaker enables happenstance for your team. Icebreaker is a Teams bot that helps the whole team get closer by grouping members every week at random to meet for coffee, burgers, pizza, or a walk around the block. The bot does the heavy lifting of finding a new person to meet with each week, and aids in scheduling the meetup.
 
 Icebreaker works really well for cultivating small, interest-based communities within your organization. For example, an organization may leverage this bot for a DevOps interest group to help facilitate organic cross-pollination of ideas and best practices. Another common use case is new employees’ cohorts to help employees learn more about each other and assimilate better in the new environment.
 
@@ -16,7 +16,7 @@ Icebreaker works really well for cultivating small, interest-based communities w
 #### Version 2 (March 2021)
 - Update from version 3 of the Bot Framework SDK to the latest version 4
 - Fetch team roster using the paged members API, to avoid failures with large team sizes. See the deprecation notice [here](https://developer.microsoft.com/en-us/microsoft-teams/blogs/changes-coming-to-microsoft-teams-bot-apis-for-fetching-team-chat-members/).
-    - If you are using Icebreaker in a large team, remember to review the `MaxPairUpsPerTeam` app service setting.
+    - If you are using Icebreaker in a large team, remember to review the `MaxMatchUpsPerTeam` app service setting.
 - Store secrets and connection strings in Azure Key Vault
 
 ## Legal notice

@@ -197,7 +197,7 @@
     <value>全部已設定。我已暫停您的配對活動。您可以隨時將它們重新開啟。</value>
     <comment>The confirmation reply that is sent when the user pauses all matches</comment>
   </data>
-  <data name="PausePairingsButtonText" xml:space="preserve">
+  <data name="PauseMatchupsButtonText" xml:space="preserve">
     <value>暫停所有配對</value>
     <comment>Button text to pause pairings</comment>
   </data>
@@ -205,7 +205,7 @@
     <value>建議聚會</value>
     <comment>Button text to propose the meetup with the match of the user</comment>
   </data>
-  <data name="ResumePairingsButtonText" xml:space="preserve">
+  <data name="PauseMatchupsButtonText" xml:space="preserve">
     <value>繼續配對</value>
     <comment>Button text to resume pairings</comment>
   </data>

@@ -13,8 +13,8 @@ The `UserActivity` event:
 * Basic user info: `UserAadObjectId`
 * Context of how it was invoked: `ConversationType`, `TeamId`
 
-The `ProcessedPairups` event:
-* Basic activity info: `PairsNotifiedCount`, `UsersNotifiedCount`, `InstalledTeamsCount`, `Event Name`
+The `ProcessedMatchups` event:
+* Basic activity info: `GroupsNotifiedCount`, `UsersNotifiedCount`, `InstalledTeamsCount`, `Event Name`
 
 From this information you can calculate key metrics:
 * Which teams (team IDs) have the Icebreaker app?

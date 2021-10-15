@@ -11,12 +11,12 @@ namespace Icebreaker.Helpers
     public class MatchingActions
     {
         /// <summary>
-        /// Opt-in for pairs matching
+        /// Opt-in for group matching
         /// </summary>
         public const string OptIn = "optin";
 
         /// <summary>
-        /// Opt-out for pairs matching
+        /// Opt-out for group matching
         /// </summary>
         public const string OptOut = "optout";
     }

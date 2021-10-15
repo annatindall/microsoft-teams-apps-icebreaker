@@ -11,14 +11,14 @@ namespace Icebreaker.Helpers
     public enum AdaptiveCardName
     {
         /// <summary>
-        /// Represents the pair-up card sent after matching
+        /// Represents the match-up card sent after matching
         /// </summary>
-        PairUpNotification,
+        MatchUpNotification,
 
         /// <summary>
-        /// Represents the no-pair card sent for a group of one
+        /// Represents the no-match card sent for a group of one
         /// </summary>
-        NoPairNotification,
+        NoMatchNotification,
 
         /// <summary>
         /// Represents unrecognized card when bot receives non-supported command

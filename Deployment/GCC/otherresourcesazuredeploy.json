@@ -280,7 +280,7 @@
                             "value": "[parameters('groupSize')]"
                         },
                         {
-                            "name": "MaxPairUpsPerTeam",
+                            "name": "MaxMatchUpsPerTeam",
                             "value": "5000"
                         },
                         {

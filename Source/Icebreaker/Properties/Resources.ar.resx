@@ -197,7 +197,7 @@
     <value>كل شيء جاهز. أوقفت الإقرانات لديك مؤقتاً. يمكنك تشغيلها مجدداً وقتما تريد.</value>
     <comment>The confirmation reply that is sent when the user pauses all matches</comment>
   </data>
-  <data name="PausePairingsButtonText" xml:space="preserve">
+  <data name="PauseMatchupsButtonText" xml:space="preserve">
     <value>إيقاف كل الإقرانات مؤقتاً</value>
     <comment>Button text to pause pairings</comment>
   </data>
@@ -205,7 +205,7 @@
     <value>اقتراح اجتماع</value>
     <comment>Button text to propose the meetup with the match of the user</comment>
   </data>
-  <data name="ResumePairingsButtonText" xml:space="preserve">
+  <data name="PauseMatchupsButtonText" xml:space="preserve">
     <value>استئناف الإقرانات</value>
     <comment>Button text to resume pairings</comment>
   </data>

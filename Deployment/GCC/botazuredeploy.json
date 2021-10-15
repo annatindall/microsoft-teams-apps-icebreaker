@@ -28,7 +28,7 @@
         "appDescription": {
             "type": "string",
             "minLength": 1,
-            "defaultValue": "Icebreaker is a cute little bot that randomly pairs team members up every week to help the team build trust and personal connections.",
+            "defaultValue": "Icebreaker is a cute little bot that randomly groups team members up every week to help the team build trust and personal connections.",
             "metadata": {
                 "description": "The description for the app."
             }

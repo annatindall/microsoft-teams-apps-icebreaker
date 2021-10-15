@@ -197,7 +197,7 @@
     <value>Alles bereit. Ich habe Ihre Übereinstimmungen angehalten. Sie können sie wieder fortsetzen, wann immer Sie möchten.</value>
     <comment>The confirmation reply that is sent when the user pauses all matches</comment>
   </data>
-  <data name="PausePairingsButtonText" xml:space="preserve">
+  <data name="PauseMatchupsButtonText" xml:space="preserve">
     <value>Alle Übereinstimmungen anhalten</value>
     <comment>Button text to pause pairings</comment>
   </data>
@@ -205,7 +205,7 @@
     <value>Treffen vorschlagen</value>
     <comment>Button text to propose the meetup with the match of the user</comment>
   </data>
-  <data name="ResumePairingsButtonText" xml:space="preserve">
+  <data name="PauseMatchupsButtonText" xml:space="preserve">
     <value>Übereinstimmungen wieder aufnehmen</value>
     <comment>Button text to resume pairings</comment>
   </data>

@@ -197,7 +197,7 @@
     <value>모두 설정되었습니다. 귀하의 매치를 일시 중지했습니다. 언제든지 다시 켤 수 있습니다.</value>
     <comment>The confirmation reply that is sent when the user pauses all matches</comment>
   </data>
-  <data name="PausePairingsButtonText" xml:space="preserve">
+  <data name="PauseMatchupsButtonText" xml:space="preserve">
     <value>모든 매치 일시 중지</value>
     <comment>Button text to pause pairings</comment>
   </data>
@@ -205,7 +205,7 @@
     <value>모임 제안</value>
     <comment>Button text to propose the meetup with the match of the user</comment>
   </data>
-  <data name="ResumePairingsButtonText" xml:space="preserve">
+  <data name="PauseMatchupsButtonText" xml:space="preserve">
     <value>일치 항목 재개</value>
     <comment>Button text to resume pairings</comment>
   </data>

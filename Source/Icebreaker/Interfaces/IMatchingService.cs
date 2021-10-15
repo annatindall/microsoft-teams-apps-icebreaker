@@ -13,9 +13,9 @@ namespace Icebreaker.Interfaces
     public interface IMatchingService
     {
         /// <summary>
-        /// Generate pairups and send pairup notifications.
+        /// Generate matchups and send matchup notifications.
         /// </summary>
-        /// <returns>The number of pairups that were made</returns>
+        /// <returns>The number of matchups that were made</returns>
         Task<int> MakeGroupsAndNotifyAsync();
     }
 }

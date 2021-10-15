@@ -197,7 +197,7 @@
     <value>Tudo pronto. Pausei suas correspondências. Você pode ativá-las novamente sempre que desejar.</value>
     <comment>The confirmation reply that is sent when the user pauses all matches</comment>
   </data>
-  <data name="PausePairingsButtonText" xml:space="preserve">
+  <data name="PauseMatchupsButtonText" xml:space="preserve">
     <value>Pausar todas as correspondências</value>
     <comment>Button text to pause pairings</comment>
   </data>
@@ -205,7 +205,7 @@
     <value>Propor um encontro</value>
     <comment>Button text to propose the meetup with the match of the user</comment>
   </data>
-  <data name="ResumePairingsButtonText" xml:space="preserve">
+  <data name="PauseMatchupsButtonText" xml:space="preserve">
     <value>Retomar correspondências</value>
     <comment>Button text to resume pairings</comment>
   </data>

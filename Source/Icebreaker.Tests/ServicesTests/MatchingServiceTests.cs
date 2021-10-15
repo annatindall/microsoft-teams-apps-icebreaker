@@ -30,7 +30,7 @@ namespace Icebreaker.Tests.ServicesTests
         private readonly TestAdapter botAdapter;
         private readonly Mock<IBotDataProvider> dataProvider;
         private readonly Mock<ConversationHelper> conversationHelper;
-        private readonly string maxPairsSettingsKey = "MaxPairUpsPerTeam";
+        private readonly string maxPairsSettingsKey = "MaxMatchUpsPerTeam";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MatchingServiceTests"/> class.
@@ -339,7 +339,7 @@ namespace Icebreaker.Tests.ServicesTests
                     },
                 }));
 
-            var maxPairUpsPerTeam = ConfigurationManager.AppSettings[this.maxPairsSettingsKey];
+            var MaxMatchUpsPerTeam = ConfigurationManager.AppSettings[this.maxPairsSettingsKey];
             ConfigurationManager.AppSettings[this.maxPairsSettingsKey] = "0";
             var sut = new MatchingService(this.dataProvider.Object, this.conversationHelper.Object, new TelemetryClient(), this.botAdapter);
 
@@ -349,7 +349,7 @@ namespace Icebreaker.Tests.ServicesTests
             var groupsNotifiedCount = await sut.MakeGroupsAndNotifyAsync();
 
             // Set original value back
-            ConfigurationManager.AppSettings[this.maxPairsSettingsKey] = maxPairUpsPerTeam;
+            ConfigurationManager.AppSettings[this.maxPairsSettingsKey] = MaxMatchUpsPerTeam;
 
             // Assert GetInstalledTeamsAsync is called once
             this.dataProvider.Verify(m => m.GetInstalledTeamsAsync(), Times.Once);

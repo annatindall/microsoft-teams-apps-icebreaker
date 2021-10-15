@@ -106,7 +106,7 @@ namespace Icebreaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Icebreaker is a cute little bot that randomly pairs team members up every week to help the team build trust and personal connections..
+        ///   Looks up a localized string similar to Icebreaker is a cute little bot that randomly groups team members every week to help the team build trust and personal connections..
         /// </summary>
         public static string EndUserManifestFullDescription {
             get {
@@ -115,7 +115,7 @@ namespace Icebreaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Icebreaker is a bot that randomly pairs team members up to build team unity..
+        ///   Looks up a localized string similar to Icebreaker is a bot that randomly groups team members to build team unity.
         /// </summary>
         public static string EndUserManifestShortDescription {
             get {
@@ -151,7 +151,7 @@ namespace Icebreaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I get to help you meet more people around your organization by randomly pairing you with someone new every week. You get to make more friends and learn about the people you work with. It&apos;s a win-win-*win* situation..
+        ///   Looks up a localized string similar to I get to help you meet more people around your organization by randomly grouping you with new people every week. You get to make more friends and learn about the people you work with. It&apos;s a win-win-*win* situation..
         /// </summary>
         public static string InstallMessageKnownInstallerPart2 {
             get {
@@ -178,7 +178,7 @@ namespace Icebreaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I get to help you meet more people around your organization by randomly pairing you with someone new every week. You get to make more friends and learn about the people you work with. It&apos;s a win-win-*win* situation..
+        ///   Looks up a localized string similar to I get to help you meet more people around your organization by randomly grouping you with new people every week. You get to make more friends and learn about the people you work with. It&apos;s a win-win-*win* situation..
         /// </summary>
         public static string InstallMessageUnknownInstallerPart2 {
             get {
@@ -196,7 +196,7 @@ namespace Icebreaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hi there again, I&apos;m {0} in {1}. A bot that pairs you with a new coworker to meet each week. This week your match is {2}..
+        ///   Looks up a localized string similar to Hi there again, I&apos;m {0} in {1}. A bot that groups you with new coworkers to meet each week. This week your match is {2}..
         /// </summary>
         public static string MatchUpCardContentPart1 {
             get {
@@ -288,9 +288,9 @@ namespace Icebreaker.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Pause all matches.
         /// </summary>
-        public static string PausePairingsButtonText {
+        public static string PauseMatchupsButtonText {
             get {
-                return ResourceManager.GetString("PausePairingsButtonText", resourceCulture);
+                return ResourceManager.GetString("PauseMatchupsButtonText", resourceCulture);
             }
         }
         
@@ -306,9 +306,9 @@ namespace Icebreaker.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Resume matches.
         /// </summary>
-        public static string ResumePairingsButtonText {
+        public static string PauseMatchupsButtonText {
             get {
-                return ResourceManager.GetString("ResumePairingsButtonText", resourceCulture);
+                return ResourceManager.GetString("PauseMatchupsButtonText", resourceCulture);
             }
         }
         
@@ -358,7 +358,7 @@ namespace Icebreaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Every week, I&apos;ll pair you with someone new. If you have the inclination that week, you can meet up--grab a lunch, or a call if you&apos;re in different locations. Look out for another message in which I&apos;ll pair you with your first match..
+        ///   Looks up a localized string similar to Every week, I&apos;ll group you with some new people. If you have the inclination that week, you can meet up--grab a lunch, or a call if you&apos;re in different locations. Look out for another message in which I&apos;ll match you with your first group..
         /// </summary>
         public static string TourWelcomeBodyText {
             get {

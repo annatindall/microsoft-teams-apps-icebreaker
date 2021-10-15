@@ -1,4 +1,4 @@
-﻿// <copyright file="PairUpNotificationAdaptiveCard.cs" company="Microsoft">
+﻿// <copyright file="MatchUpNotificationAdaptiveCard.cs" company="Microsoft">
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 // </copyright>
@@ -15,9 +15,9 @@ namespace Icebreaker.Helpers.AdaptiveCards
     using Microsoft.Bot.Schema.Teams;
 
     /// <summary>
-    /// Builder class for the pairup notification card
+    /// Builder class for the matchup notification card
     /// </summary>
-    public class PairUpNotificationAdaptiveCard : AdaptiveCardBase
+    public class MatchUpNotificationAdaptiveCard : AdaptiveCardBase
     {
         /// <summary>
         /// Default marker string in the UPN that indicates a user is externally-authenticated
@@ -25,16 +25,16 @@ namespace Icebreaker.Helpers.AdaptiveCards
         private const string ExternallyAuthenticatedUpnMarker = "#ext#";
 
         private static readonly Lazy<AdaptiveCardTemplate> AdaptiveCardTemplate =
-            new Lazy<AdaptiveCardTemplate>(() => CardTemplateHelper.GetAdaptiveCardTemplate(AdaptiveCardName.PairUpNotification));
+            new Lazy<AdaptiveCardTemplate>(() => CardTemplateHelper.GetAdaptiveCardTemplate(AdaptiveCardName.MatchUpNotification));
 
         /// <summary>
-        /// Creates the pairup notification card.
+        /// Creates the matchup notification card.
         /// </summary>
         /// <param name="teamName">The team name.</param>
         /// <param name="sender">The user who will be sending this card.</param>
         /// <param name="recipients">The users who will be receiving this card.</param>
         /// <param name="botDisplayName">The bot display name.</param>
-        /// <returns>Pairup notification card</returns>
+        /// <returns>Matchup notification card</returns>
         public static Attachment GetCard(string teamName, TeamsChannelAccount sender, List<TeamsChannelAccount> recipients, string botDisplayName)
         {
             // Set alignment of text based on default locale.
@@ -70,7 +70,7 @@ namespace Icebreaker.Helpers.AdaptiveCards
                 matchUpCardContentPart2 = Resources.MatchUpCardContentPart2,
                 chatWithMatchButtonText = recipients.Count > 1 ? Resources.ChatWithGroupButtonText : string.Format(Resources.ChatWithMatchButtonText, recipientGivenNames[0]),
                 chatWithMessageGreeting = Uri.EscapeDataString(Resources.ChatWithMessageGreeting),
-                pauseMatchesButtonText = Resources.PausePairingsButtonText,
+                pauseMatchesButtonText = Resources.PauseMatchupsButtonText,
                 proposeMeetupButtonText = Resources.ProposeMeetupButtonText,
                 personUpn = recipientUpnsString,
                 meetingLink,

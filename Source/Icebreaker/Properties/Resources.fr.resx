@@ -197,7 +197,7 @@
     <value>Tout est configuré. J’ai suspendu vos correspondances. Vous pouvez les réactiver quand vous le souhaitez.</value>
     <comment>The confirmation reply that is sent when the user pauses all matches</comment>
   </data>
-  <data name="PausePairingsButtonText" xml:space="preserve">
+  <data name="PauseMatchupsButtonText" xml:space="preserve">
     <value>Suspendre toutes les correspondances</value>
     <comment>Button text to pause pairings</comment>
   </data>
@@ -205,7 +205,7 @@
     <value>Proposer un meet-up</value>
     <comment>Button text to propose the meetup with the match of the user</comment>
   </data>
-  <data name="ResumePairingsButtonText" xml:space="preserve">
+  <data name="PauseMatchupsButtonText" xml:space="preserve">
     <value>Reprendre les correspondances</value>
     <comment>Button text to resume pairings</comment>
   </data>

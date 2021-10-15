@@ -273,8 +273,8 @@ namespace Icebreaker.Bot
                             {
                                 new CardAction()
                                 {
-                                    Title = Resources.ResumePairingsButtonText,
-                                    DisplayText = Resources.ResumePairingsButtonText,
+                                    Title = Resources.PauseMatchupsButtonText,
+                                    DisplayText = Resources.PauseMatchupsButtonText,
                                     Type = ActionTypes.MessageBack,
                                     Text = MatchingActions.OptIn,
                                 },
@@ -308,8 +308,8 @@ namespace Icebreaker.Bot
                             {
                                 new CardAction()
                                 {
-                                    Title = Resources.PausePairingsButtonText,
-                                    DisplayText = Resources.PausePairingsButtonText,
+                                    Title = Resources.PauseMatchupsButtonText,
+                                    DisplayText = Resources.PauseMatchupsButtonText,
                                     Type = ActionTypes.MessageBack,
                                     Text = MatchingActions.OptOut,
                                 },
@@ -439,7 +439,7 @@ namespace Icebreaker.Bot
         }
 
         /// <summary>
-        /// Opt out the user from further pairups
+        /// Opt out the user from further matchups
         /// </summary>
         /// <param name="tenantId">The tenant id</param>
         /// <param name="userId">The user id</param>
@@ -451,7 +451,7 @@ namespace Icebreaker.Bot
         }
 
         /// <summary>
-        /// Opt in the user to pairups
+        /// Opt in the user to matchups
         /// </summary>
         /// <param name="tenantId">The tenant id</param>
         /// <param name="userId">The user id</param>

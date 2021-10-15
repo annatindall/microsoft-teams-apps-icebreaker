@@ -1,4 +1,4 @@
-﻿// <copyright file="NoPairNotificationAdaptiveCard.cs" company="Microsoft">
+﻿// <copyright file="NoMatchNotificationAdaptiveCard.cs" company="Microsoft">
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 // </copyright>
@@ -14,9 +14,9 @@ namespace Icebreaker.Helpers.AdaptiveCards
     using Microsoft.Bot.Schema.Teams;
 
     /// <summary>
-    /// Builder class for the no pairup notification card
+    /// Builder class for the no matchup notification card
     /// </summary>
-    public class NoPairNotificationAdaptiveCard : AdaptiveCardBase
+    public class NoMatchNotificationAdaptiveCard : AdaptiveCardBase
     {
         /// <summary>
         /// Default marker string in the UPN that indicates a user is externally-authenticated
@@ -24,15 +24,15 @@ namespace Icebreaker.Helpers.AdaptiveCards
         private const string ExternallyAuthenticatedUpnMarker = "#ext#";
 
         private static readonly Lazy<AdaptiveCardTemplate> AdaptiveCardTemplate =
-            new Lazy<AdaptiveCardTemplate>(() => CardTemplateHelper.GetAdaptiveCardTemplate(AdaptiveCardName.NoPairNotification));
+            new Lazy<AdaptiveCardTemplate>(() => CardTemplateHelper.GetAdaptiveCardTemplate(AdaptiveCardName.NoMatchNotification));
 
         /// <summary>
-        /// Creates the nopairup notification card.
+        /// Creates the matchup notification card.
         /// </summary>
         /// <param name="teamName">The team name.</param>
         /// <param name="sender">The user who will be sending this card.</param>
         /// <param name="botDisplayName">The bot display name.</param>
-        /// <returns>No pairup notification card</returns>
+        /// <returns>No matchup notification card</returns>
         public static Attachment GetCard(string teamName, TeamsChannelAccount sender, string botDisplayName)
         {
             // Set alignment of text based on default locale.
@@ -43,8 +43,8 @@ namespace Icebreaker.Helpers.AdaptiveCards
             var cardData = new
             {
                 noMatchUpCardTitleContent = "Sorry, no matches this time", // Resources.NoMatchUpCardTitleContent,
-                noMatchUpCardContent = $"Hi there again, I'm {botDisplayName} in {teamName}. A bot that pairs you with a new coworker to meet each week. You didn't get matched to a group this round, but hopefully I'll help you meet people next time! ", // string.Format(Resources.NoMatchUpCardContent, botDisplayName, teamName),
-                pauseMatchesButtonText = Resources.PausePairingsButtonText,
+                noMatchUpCardContent = $"Hi there again, I'm {botDisplayName} in {teamName}. A bot that groups you with new coworkers to meet each week. You didn't get matched to a group this round, but hopefully I'll help you meet people next time! ", // string.Format(Resources.NoMatchUpCardContent, botDisplayName, teamName),
+                pauseMatchesButtonText = Resources.PauseMatchupsButtonText,
                 textAlignment,
             };
 

@@ -31,7 +31,7 @@ namespace Icebreaker.Services
         private readonly ConversationHelper conversationHelper;
         private readonly TelemetryClient telemetryClient;
         private readonly BotAdapter botAdapter;
-        private readonly int maxPairUpsPerTeam;
+        private readonly int MaxMatchUpsPerTeam;
         private readonly int groupSize;
         private readonly string botDisplayName;
 
@@ -48,7 +48,7 @@ namespace Icebreaker.Services
             this.conversationHelper = conversationHelper;
             this.telemetryClient = telemetryClient;
             this.botAdapter = botAdapter;
-            this.maxPairUpsPerTeam = Convert.ToInt32(CloudConfigurationManager.GetSetting("MaxPairUpsPerTeam"));
+            this.MaxMatchUpsPerTeam = Convert.ToInt32(CloudConfigurationManager.GetSetting("MaxMatchUpsPerTeam"));
             this.groupSize = Convert.ToInt32(CloudConfigurationManager.GetSetting("GroupSize"));
             this.botDisplayName = CloudConfigurationManager.GetSetting("BotDisplayName");
         }
@@ -78,7 +78,7 @@ namespace Icebreaker.Services
             {
                 var teams = await this.dataProvider.GetInstalledTeamsAsync();
                 installedTeamsCount = teams.Count;
-                this.telemetryClient.TrackTrace($"Generating pairs for {installedTeamsCount} teams");
+                this.telemetryClient.TrackTrace($"Generating groups for {installedTeamsCount} teams");
 
                 // Fetch all db users opt-in status/lookup
                 var dbMembersLookup = await this.dataProvider.GetAllUsersOptInStatusAsync();
@@ -86,14 +86,14 @@ namespace Icebreaker.Services
 
                 foreach (var team in teams)
                 {
-                    this.telemetryClient.TrackTrace($"Pairing members of team {team.Id}");
+                    this.telemetryClient.TrackTrace($"Grouping members of team {team.Id}");
 
                     try
                     {
                         var teamName = await this.conversationHelper.GetTeamNameByIdAsync(this.botAdapter, team);
                         var optedInUsers = await this.GetOptedInUsersAsync(dbMembersLookup, team);
 
-                        foreach (var group in this.MakeGroups(optedInUsers).Take(this.maxPairUpsPerTeam))
+                        foreach (var group in this.MakeGroups(optedInUsers).Take(this.MaxMatchUpsPerTeam))
                         {
                             usersNotifiedCount += await this.NotifyGroupAsync(team, teamName, group, default(CancellationToken));
                             groupsNotifiedCount++;
@@ -101,18 +101,18 @@ namespace Icebreaker.Services
                     }
                     catch (Exception ex)
                     {
-                        this.telemetryClient.TrackTrace($"Error pairing up team members: {ex.Message}", SeverityLevel.Warning);
+                        this.telemetryClient.TrackTrace($"Error grouping team members: {ex.Message}", SeverityLevel.Warning);
                         this.telemetryClient.TrackException(ex);
                     }
                 }
             }
             catch (Exception ex)
             {
-                this.telemetryClient.TrackTrace($"Error making pairups: {ex.Message}", SeverityLevel.Warning);
+                this.telemetryClient.TrackTrace($"Error making matchups: {ex.Message}", SeverityLevel.Warning);
                 this.telemetryClient.TrackException(ex);
             }
 
-            // Log telemetry about the pairups
+            // Log telemetry about the matchups
             var properties = new Dictionary<string, string>
             {
                 { "InstalledTeamsCount", installedTeamsCount.ToString() },
@@ -120,14 +120,14 @@ namespace Icebreaker.Services
                 { "UsersNotifiedCount", usersNotifiedCount.ToString() },
                 { "DBMembersCount", dbMembersCount.ToString() },
             };
-            this.telemetryClient.TrackEvent("ProcessedPairups", properties);
+            this.telemetryClient.TrackEvent("ProcessedMatchups", properties);
 
-            this.telemetryClient.TrackTrace($"Made {groupsNotifiedCount} pairups, {usersNotifiedCount} notifications sent");
+            this.telemetryClient.TrackTrace($"Made {groupsNotifiedCount} matchups, {usersNotifiedCount} notifications sent");
             return groupsNotifiedCount;
         }
 
         /// <summary>
-        /// Notify a pairup.
+        /// Notify a matchup.
         /// </summary>
         /// <param name="teamModel">DB team model info.</param>
         /// <param name="teamName">MS-Teams team name</param>
@@ -148,8 +148,8 @@ namespace Icebreaker.Services
 
                 var restOfGroup = new List<TeamsChannelAccount>(teamsGroup).FindAll(person => person.AadObjectId != teamsPerson.AadObjectId);
                 var card = restOfGroup.Count > 0 ?
-                    PairUpNotificationAdaptiveCard.GetCard(teamName, teamsPerson, restOfGroup, this.botDisplayName) :
-                    NoPairNotificationAdaptiveCard.GetCard(teamName, teamsPerson, this.botDisplayName);
+                    MatchUpNotificationAdaptiveCard.GetCard(teamName, teamsPerson, restOfGroup, this.botDisplayName) :
+                    NoMatchNotificationAdaptiveCard.GetCard(teamName, teamsPerson, this.botDisplayName);
                 tasks.Add(
                     this.conversationHelper.NotifyUserAsync(this.botAdapter, teamModel.ServiceUrl, teamModel.TeamId, MessageFactory.Attachment(card), teamsPerson, teamModel.TenantId, cancellationToken));
             }
@@ -193,10 +193,10 @@ namespace Icebreaker.Services
         }
 
         /// <summary>
-        /// Pair list of users into groups of 2 users per group
+        /// Groups list of users
         /// </summary>
         /// <param name="users">Users accounts</param>
-        /// <returns>List of pairs</returns>
+        /// <returns>List of groups</returns>
         private List<List<ChannelAccount>> MakeGroups(List<ChannelAccount> users)
         {
             this.telemetryClient.TrackTrace($"Making groups of size ${this.groupSize}");

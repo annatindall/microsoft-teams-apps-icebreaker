@@ -26,7 +26,7 @@ namespace Icebreaker.Controllers
         /// <summary>
         /// Initializes a new instance of the <see cref="ProcessNowController"/> class.
         /// </summary>
-        /// <param name="matchingService">Matching service contains logic to pair and match users</param>
+        /// <param name="matchingService">Matching service contains logic to group and match users</param>
         /// <param name="botCredentials">The bot AAD credentials</param>
         /// <param name="secretsHelper">Secrets helper to fetch secrets</param>
         public ProcessNowController(IMatchingService matchingService, MicrosoftAppCredentials botCredentials, ISecretsHelper secretsHelper)

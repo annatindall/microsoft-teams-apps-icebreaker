@@ -385,8 +385,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\AdaptiveCards\PairUpNotificationAdaptiveCard.cs" />
-	<Compile Include="Helpers\AdaptiveCards\NoPairNotificationAdaptiveCard.cs" />
+    <Compile Include="Helpers\AdaptiveCards\MatchUpNotificationAdaptiveCard.cs" />
+	<Compile Include="Helpers\AdaptiveCards\NoMatchNotificationAdaptiveCard.cs" />
     <Compile Include="Helpers\AdaptiveCards\UnrecognizedInputAdaptiveCard.cs" />
     <Compile Include="Helpers\AdaptiveCards\WelcomeNewMemberAdaptiveCard.cs" />
     <Compile Include="Helpers\AdaptiveCards\WelcomeTeamAdaptiveCard.cs" />
@@ -406,10 +406,10 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Helpers\AdaptiveCards\PairUpNotificationAdaptiveCard.json">
+    <Content Include="Helpers\AdaptiveCards\MatchUpNotificationAdaptiveCard.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-	<Content Include="Helpers\AdaptiveCards\NoPairNotificationAdaptiveCard.json">
+	<Content Include="Helpers\AdaptiveCards\NoMatchNotificationAdaptiveCard.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Helpers\AdaptiveCards\WelcomeNewMemberAdaptiveCard.json">
