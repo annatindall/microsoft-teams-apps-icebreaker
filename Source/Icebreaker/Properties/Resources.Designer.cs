@@ -79,6 +79,15 @@ namespace Icebreaker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chat with the group.
+        /// </summary>
+        public static string ChatWithGroupButtonText {
+            get {
+                return ResourceManager.GetString("ChatWithGroupButtonText", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Hi there.
         /// </summary>
         public static string ChatWithMessageGreeting {
@@ -204,6 +213,15 @@ namespace Icebreaker.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to You&apos;ve been matched with {0}..
+        /// </summary>
+        public static string MatchUpCardMatchedTextMultiple {
+            get {
+                return ResourceManager.GetString("MatchUpCardMatchedTextMultiple", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to You&apos;ve been matched with {0}..
         /// </summary>

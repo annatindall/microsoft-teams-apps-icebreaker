@@ -28,7 +28,7 @@ Here is a video walk-through of the manual deployment, if you'd like to follow a
 - Unzip the Content to a folder. (say IceBreaker)
 - Open a PowerShell window in **administrator** mode and navigate to the folder where you unzipped the content.
 - Navigate to Deployment folder.
-    ```  
+    ```
     cd IceBreaker\Deployment
     ```
 - Run the below command. This will allow you to run deploy.ps1. By default, the execution policy is restricted. You may change it to back restricted after deployment is completed.
@@ -84,7 +84,7 @@ Here is a video walk-through of the manual deployment, if you'd like to follow a
 ## 3. Execute script
 
 - Open a PowerShell window in **administrator** mode and navigate to Deployment folder
-    ```  
+    ```
     cd IceBreaker\Deployment
     ```
 - Execute the `deploy.ps1` script in the Powershell window:

@@ -8,7 +8,7 @@
     "name": "Microsoft",
     "websiteUrl": "https://website.com",
     "privacyUrl": "https://website.com/privacy",
-    "termsOfUseUrl": "https://website.com/tos"
+    "termsOfUseUrl": "https://website.com/terms"
   },
   "localizationInfo": {
     "defaultLanguageTag": "en",

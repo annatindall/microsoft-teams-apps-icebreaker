@@ -6,6 +6,7 @@
 namespace Icebreaker.Helpers.AdaptiveCards
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using global::AdaptiveCards;
     using global::AdaptiveCards.Templating;
@@ -31,36 +32,47 @@ namespace Icebreaker.Helpers.AdaptiveCards
         /// </summary>
         /// <param name="teamName">The team name.</param>
         /// <param name="sender">The user who will be sending this card.</param>
-        /// <param name="recipient">The user who will be receiving this card.</param>
+        /// <param name="recipients">The users who will be receiving this card.</param>
         /// <param name="botDisplayName">The bot display name.</param>
         /// <returns>Pairup notification card</returns>
-        public static Attachment GetCard(string teamName, TeamsChannelAccount sender, TeamsChannelAccount recipient, string botDisplayName)
+        public static Attachment GetCard(string teamName, TeamsChannelAccount sender, List<TeamsChannelAccount> recipients, string botDisplayName)
         {
             // Set alignment of text based on default locale.
             var textAlignment = CultureInfo.CurrentCulture.TextInfo.IsRightToLeft ? AdaptiveHorizontalAlignment.Right.ToString() : AdaptiveHorizontalAlignment.Left.ToString();
 
             // Guest users may not have their given name specified in AAD, so fall back to the full name if needed
-            var senderGivenName = string.IsNullOrEmpty(sender.GivenName) ? sender.Name : sender.GivenName;
-            var recipientGivenName = string.IsNullOrEmpty(recipient.GivenName) ? recipient.Name : recipient.GivenName;
+            var senderGivenName = GetName(sender);
 
-            // To start a chat with a guest user, use their external email, not the UPN
-            var recipientUpn = !IsGuestUser(recipient) ? recipient.UserPrincipalName : recipient.Email;
+            var recipientUpns = new List<String> {};
+            var recipientGivenNames = new List<String> {};
+            var recipientNames = new List<String> {};
+            foreach (TeamsChannelAccount recipient in recipients)
+            {
+                recipientGivenNames.Add(GetName(recipient));
+                recipientNames.Add(recipient.Name);
 
-            var meetingTitle = string.Format(Resources.MeetupTitle, senderGivenName, recipientGivenName);
+                // To start a chat with a guest user, use their external email, not the UPN
+                var recipientUpn = !IsGuestUser(recipient) ? recipient.UserPrincipalName : recipient.Email;
+                recipientUpns.Add(recipientUpn);
+            }
+
+            var recipientUpnsString = string.Join(",", recipientUpns);
+
+            var meetingTitle = string.Format(Resources.MeetupTitle, senderGivenName, string.Join(" / ", recipientGivenNames));
             var meetingContent = string.Format(Resources.MeetupContent, botDisplayName);
-            var meetingLink = "https://teams.microsoft.com/l/meeting/new?subject=" + Uri.EscapeDataString(meetingTitle) + "&attendees=" + recipientUpn + "&content=" + Uri.EscapeDataString(meetingContent);
+            var meetingLink = "https://teams.microsoft.com/l/meeting/new?subject=" + Uri.EscapeDataString(meetingTitle) + "&attendees=" + recipientUpnsString + "&content=" + Uri.EscapeDataString(meetingContent);
 
             var cardData = new
             {
                 matchUpCardTitleContent = Resources.MatchUpCardTitleContent,
-                matchUpCardMatchedText = string.Format(Resources.MatchUpCardMatchedText, recipient.Name),
-                matchUpCardContentPart1 = string.Format(Resources.MatchUpCardContentPart1, botDisplayName, teamName, recipient.Name),
+                matchUpCardMatchedText = recipients.Count > 1 ? string.Format(Resources.MatchUpCardMatchedTextMultiple, "\r\n- " + string.Join("\r\n- ", recipientNames)) : string.Format(Resources.MatchUpCardMatchedText, recipientGivenNames[0]),
+                matchUpCardContentPart1 = string.Format(Resources.MatchUpCardContentPart1, botDisplayName, teamName),
                 matchUpCardContentPart2 = Resources.MatchUpCardContentPart2,
-                chatWithMatchButtonText = string.Format(Resources.ChatWithMatchButtonText, recipientGivenName),
+                chatWithMatchButtonText = recipients.Count > 1 ? Resources.ChatWithGroupButtonText : string.Format(Resources.ChatWithMatchButtonText, recipientGivenNames[0]),
                 chatWithMessageGreeting = Uri.EscapeDataString(Resources.ChatWithMessageGreeting),
                 pauseMatchesButtonText = Resources.PausePairingsButtonText,
                 proposeMeetupButtonText = Resources.ProposeMeetupButtonText,
-                personUpn = recipientUpn,
+                personUpn = recipientUpnsString,
                 meetingLink,
                 textAlignment,
             };
@@ -76,6 +88,12 @@ namespace Icebreaker.Helpers.AdaptiveCards
         private static bool IsGuestUser(TeamsChannelAccount account)
         {
             return account.UserPrincipalName.IndexOf(ExternallyAuthenticatedUpnMarker, StringComparison.InvariantCultureIgnoreCase) >= 0;
+        }
+
+        private static string GetName(TeamsChannelAccount user)
+        {
+            // Guest users may not have their given name specified in AAD, so fall back to the full name if needed
+            return string.IsNullOrEmpty(user.GivenName) ? user.Name : user.GivenName;
         }
     }
 }
