@@ -16,6 +16,6 @@ namespace Icebreaker.Interfaces
         /// Generate pairups and send pairup notifications.
         /// </summary>
         /// <returns>The number of pairups that were made</returns>
-        Task<int> MakePairsAndNotifyAsync();
+        Task<int> MakeGroupsAndNotifyAsync();
     }
 }

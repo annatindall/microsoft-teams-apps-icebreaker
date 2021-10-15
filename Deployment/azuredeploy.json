@@ -50,28 +50,36 @@
                 "description": "The link to the icon for the bot. It must resolve to a PNG file."
             }
         },
-      "DefaultCulture": {
-        "defaultValue": "en",
-        "minLength": 1,
-        "type": "String",
-        "allowedValues": [
-          "en",
-          "ar",
-          "de",
-          "es",
-          "fr",
-          "he",
-          "ja",
-          "ko",
-          "pt-BR",
-          "ru",
-          "zh-CN",
-          "zh-TW"
-        ],
-        "metadata": {
-          "description": "Default culture."
-        }
-      },
+        "DefaultCulture": {
+            "defaultValue": "en",
+            "minLength": 1,
+            "type": "String",
+            "allowedValues": [
+                "en",
+                "ar",
+                "de",
+                "es",
+                "fr",
+                "he",
+                "ja",
+                "ko",
+                "pt-BR",
+                "ru",
+                "zh-CN",
+                "zh-TW"
+            ],
+            "metadata": {
+                "description": "Default culture."
+            }
+        },
+        "groupSize": {
+            "type": "int",
+            "minValue": 2,
+            "defaultValue": 2,
+            "metadata": {
+                "description": "The size of groups to create."
+            }
+        },
         "pairingWeekInterval": {
             "type": "int",
             "minValue": 1,
@@ -315,6 +323,10 @@
                         {
                             "name": "CosmosCollectionUsers",
                             "value": "UsersOptInStatus"
+                        },
+                        {
+                            "name": "GroupSize",
+                            "value": "[parameters('groupSize')]"
                         },
                         {
                             "name": "MaxPairUpsPerTeam",
