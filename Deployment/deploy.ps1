@@ -400,6 +400,7 @@ function GenerateAppManifestPackage {
 
         WriteInfo "`nGenerating package for the app template..."
 
+        $sourceManifestDir = "..\Manifest\"
         $sourceManifestPath = "..\Manifest\manifest.json"
         $srcManifestBackupPath = "..\Manifest\manifest_backup.json"
         $destinationZipPath = "..\manifest\IceBreaker-manifest.zip"
@@ -425,9 +426,15 @@ function GenerateAppManifestPackage {
         }
         $appManifestContent | Set-Content $sourceManifestPath -Force
 
+        # Determine the files to compress, including the language files required by the manifest.
+        # Make sure to use array concatenation in case there is only one language specified.
+        $manifestJson = Get-Content $sourceManifestPath -Raw | ConvertFrom-Json
+        $languageFiles = @($manifestJson.localizationInfo.additionalLanguages.file).ForEach({ $sourceManifestDir + "$_" })
+        $filesToCompress = $languageFiles + "..\manifest\color.png" + "..\manifest\outline.png" + $sourceManifestPath
+
         # Generate zip archive 
         $compressManifest = @{
-            LiteralPath      = "..\manifest\color.png", "..\manifest\outline.png", $sourceManifestPath
+            LiteralPath      = $filesToCompress
             CompressionLevel = "Fastest"
             DestinationPath  = $destinationZipPath
         }
